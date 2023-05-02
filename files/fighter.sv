@@ -69,7 +69,6 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [1:0] signs;
 	logic [1:0] hundreds;
 	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig;
-	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
 
 //=======================================================
@@ -115,12 +114,12 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign {Reset_h}=~ (KEY[0]);
 
 	//Our A/D converter is only 12 bit
-	assign VGA_R = Red[7:4];
-	assign VGA_B = Blue[7:4];
-	assign VGA_G = Green[7:4];
+//	assign VGA_R = Red[3:0];
+//	assign VGA_B = Blue[3:0];
+//	assign VGA_G = Green[3:0];
 	
 	
-	lab62soc u0 (
+	finalsoc u0 (
 		.clk_clk                           (MAX10_CLK1_50),  //clk.clk
 		.reset_reset_n                     (1'b1),           //reset.reset_n
 		.altpll_0_locked_conduit_export    (),               //altpll_0_locked_conduit.export
@@ -172,6 +171,16 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.DrawY(drawysig)
 	);
 	
+//	//testing
+//	streetfighter_example ex(
+//		.vga_clk(VGA_Clk),
+//		.DrawX(drawxsig), .DrawY(drawysig),
+//		.blank(blank),
+//		.red(VGA_R),
+//		.green(VGA_G),
+//		.blue(VGA_B)
+//	);
+	
 	ball bm(
 		.Reset(Reset_h),
 		.frame_clk(VGA_VS),
@@ -187,9 +196,11 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.DrawX(drawxsig),
 		.DrawY(drawysig),
 		.Ball_size(ballsizesig),
-		.Red(Red), //out
-		.Green(Green),
-		.Blue(Blue)
+		.blank(blank),
+		.vga_clk(VGA_Clk),
+		.Red(VGA_R), //out
+		.Green(VGA_G),
+		.Blue(VGA_B)
 	);
 	
 	

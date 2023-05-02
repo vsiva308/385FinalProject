@@ -14,10 +14,12 @@
 
 
 module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
-                       output logic [7:0]  Red, Green, Blue );
+							  input logic blank,
+							  input logic vga_clk,
+                       output logic [3:0]  Red, Green, Blue );
     
     logic ball_on;
-	 
+	 logic [3:0] bg_red, bg_green, bg_blue;
  /* Old Ball: Generated square box by checking if the current pixel is within a square of length
     2*Ball_Size, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
 	 
@@ -35,7 +37,19 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 	 assign DistX = DrawX - BallX;
     assign DistY = DrawY - BallY;
     assign Size = Ball_size;
+	 
+	 //drawing background logic -> bg registers -> combinational logic with ball overlap
+	 streetfighter_example bg (
+		.vga_clk(vga_clk),
+		.DrawX(DrawX), 
+		.DrawY(DrawY),
+		.blank(blank),
+		.red(bg_red),
+		.green(bg_green),
+		.blue(bg_blue)
+	);
 	  
+	 //logic for coloring ball or background (combinational since pixel logic is in ball.sv)
     always_comb
     begin:Ball_on_proc
         if ( ( DistX*DistX + DistY*DistY) <= (Size * Size) ) 
@@ -46,17 +60,17 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
        
     always_comb
     begin:RGB_Display
-        if ((ball_on == 1'b1)) 
+        if ((ball_on == 1'b1)) //ball
         begin 
-            Red = 8'hff;
-            Green = 8'h55;
-            Blue = 8'h00;
+            Red = 4'hf;
+            Green = 4'h5;
+            Blue = 4'hf;
         end       
         else 
-        begin 
-            Red = 8'h00; 
-            Green = 8'h00;
-            Blue = 8'h7f - DrawX[9:3];
+        begin //background
+            Red = bg_red; 
+            Green = bg_green;
+            Blue = bg_blue;
         end      
     end 
     
