@@ -13,30 +13,6 @@ module Jcontrol (input clk, Jump, Reset,
             clkdiv <= ~ (clkdiv);
     end
 	
-	always_ff @ (posedge clkdiv or posedge Reset )
-    begin 
-        if (Reset) 
-            clkdiv2 <= 1'b0;
-        else 
-            clkdiv2 <= ~ (clkdiv2);
-    end
-	 
-	 always_ff @ (posedge clkdiv2 or posedge Reset )
-    begin 
-        if (Reset) 
-            clkdiv3 <= 1'b0;
-        else 
-            clkdiv3 <= ~ (clkdiv3);
-    end
-	 
-	 always_ff @ (posedge clkdiv3 or posedge Reset )
-    begin 
-        if (Reset) 
-            jumpclk <= 1'b0;
-        else 
-            jumpclk <= ~ (jumpclk);
-    end
-	
 	always_ff @ (posedge clkdiv)
 	begin
 		curr_jstate <= next_jstate;

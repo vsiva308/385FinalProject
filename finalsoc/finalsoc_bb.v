@@ -4,7 +4,6 @@ module finalsoc (
 	clk_clk,
 	hex_digits_export,
 	key_external_connection_export,
-	keycode_export,
 	leds_export,
 	reset_reset_n,
 	sdram_clk_clk,
@@ -23,13 +22,16 @@ module finalsoc (
 	spi0_SS_n,
 	usb_gpx_export,
 	usb_irq_export,
-	usb_rst_export);	
+	usb_rst_export,
+	keycode_0_export,
+	keycode_1_export,
+	keycode_2_export,
+	keycode_3_export);	
 
 	input		acc_wire_export;
 	input		clk_clk;
 	output	[15:0]	hex_digits_export;
 	input	[1:0]	key_external_connection_export;
-	output	[7:0]	keycode_export;
 	output	[13:0]	leds_export;
 	input		reset_reset_n;
 	output		sdram_clk_clk;
@@ -49,4 +51,8 @@ module finalsoc (
 	input		usb_gpx_export;
 	input		usb_irq_export;
 	output		usb_rst_export;
+	output	[7:0]	keycode_0_export;
+	output	[7:0]	keycode_1_export;
+	output	[7:0]	keycode_2_export;
+	output	[7:0]	keycode_3_export;
 endmodule

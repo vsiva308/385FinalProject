@@ -69,7 +69,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [1:0] signs;
 	logic [1:0] hundreds;
 	logic [9:0] drawxsig, drawysig, onexsig, oneysig, twoxsig, twoysig;
-	logic [7:0] keycode;
+	logic [7:0] keycode_0, keycode_1, keycode_2, keycode_3;
 
 //=======================================================
 //  Structural coding
@@ -153,8 +153,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		//LEDs and HEX
 		.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
 		.leds_export({hundreds, signs, LEDR}),
-		.keycode_export(keycode)
-		
+		.keycode_0_export(keycode_0),
+		.keycode_1_export(keycode_1),
+		.keycode_2_export(keycode_2),
+		.keycode_3_export(keycode_3)
 	 );
 
 
@@ -184,7 +186,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	PlayerControl PlayerControl(
 		.Reset(Reset_h), 
 		.frame_clk(VGA_VS), 
-		.keycode(keycode), 
+		.keycode_0(keycode_0),
+		.keycode_1(keycode_1),
+		.keycode_2(keycode_2),
+		.keycode_3(keycode_3),
 		.Player1X(onexsig), 
 		.Player1Y(oneysig),
 		.Player2X(twoxsig),

@@ -125,9 +125,12 @@ void printSignedHex1(signed char value) {
 	IOWR_ALTERA_AVALON_PIO_DATA(HEX_DIGITS_PIO_BASE, pio_val);
 }
 
-void setKeycode(WORD keycode)
+void setKeycode(WORD keycode_0, WORD keycode_1, WORD keycode_2, WORD keycode_3)
 {
-	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_BASE, keycode);
+	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_0_BASE, keycode_0);
+	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_1_BASE, keycode_1);
+	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_2_BASE, keycode_2);
+	IOWR_ALTERA_AVALON_PIO_DATA(KEYCODE_3_BASE, keycode_3);
 }
 int main() {
 	BYTE rcode;
@@ -137,7 +140,10 @@ int main() {
 	BYTE runningdebugflag = 0;//flag to dump out a bunch of information when we first get to USB_STATE_RUNNING
 	BYTE errorflag = 0; //flag once we get an error device so we don't keep dumping out state info
 	BYTE device;
-	WORD keycode;
+	WORD keycode_0;
+	WORD keycode_1;
+	WORD keycode_2;
+	WORD keycode_3;
 
 	printf("initializing MAX3421E...\n");
 	MAX3421E_init();
@@ -167,7 +173,7 @@ int main() {
 				for (int i = 0; i < 6; i++) {
 					printf("%x ", kbdbuf.keycode[i]);
 				}
-				setKeycode(kbdbuf.keycode[0]);
+				setKeycode(kbdbuf.keycode[0], kbdbuf.keycode[1], kbdbuf.keycode[2], kbdbuf.keycode[3]);
 				printSignedHex0(kbdbuf.keycode[0]);
 				printSignedHex1(kbdbuf.keycode[1]);
 				printf("\n");

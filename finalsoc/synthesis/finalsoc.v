@@ -8,7 +8,10 @@ module finalsoc (
 		input  wire        clk_clk,                        //                     clk.clk
 		output wire [15:0] hex_digits_export,              //              hex_digits.export
 		input  wire [1:0]  key_external_connection_export, // key_external_connection.export
-		output wire [7:0]  keycode_export,                 //                 keycode.export
+		output wire [7:0]  keycode_0_export,               //               keycode_0.export
+		output wire [7:0]  keycode_1_export,               //               keycode_1.export
+		output wire [7:0]  keycode_2_export,               //               keycode_2.export
+		output wire [7:0]  keycode_3_export,               //               keycode_3.export
 		output wire [13:0] leds_export,                    //                    leds.export
 		input  wire        reset_reset_n,                  //                   reset.reset_n
 		output wire        sdram_clk_clk,                  //               sdram_clk.clk
@@ -83,11 +86,6 @@ module finalsoc (
 	wire  [15:0] mm_interconnect_0_sdram_s1_writedata;                        // mm_interconnect_0:sdram_s1_writedata -> sdram:az_data
 	wire  [31:0] mm_interconnect_0_acc_s1_readdata;                           // acc:readdata -> mm_interconnect_0:acc_s1_readdata
 	wire   [1:0] mm_interconnect_0_acc_s1_address;                            // mm_interconnect_0:acc_s1_address -> acc:address
-	wire         mm_interconnect_0_keycode_s1_chipselect;                     // mm_interconnect_0:keycode_s1_chipselect -> keycode:chipselect
-	wire  [31:0] mm_interconnect_0_keycode_s1_readdata;                       // keycode:readdata -> mm_interconnect_0:keycode_s1_readdata
-	wire   [1:0] mm_interconnect_0_keycode_s1_address;                        // mm_interconnect_0:keycode_s1_address -> keycode:address
-	wire         mm_interconnect_0_keycode_s1_write;                          // mm_interconnect_0:keycode_s1_write -> keycode:write_n
-	wire  [31:0] mm_interconnect_0_keycode_s1_writedata;                      // mm_interconnect_0:keycode_s1_writedata -> keycode:writedata
 	wire  [31:0] mm_interconnect_0_usb_irq_s1_readdata;                       // usb_irq:readdata -> mm_interconnect_0:usb_irq_s1_readdata
 	wire   [1:0] mm_interconnect_0_usb_irq_s1_address;                        // mm_interconnect_0:usb_irq_s1_address -> usb_irq:address
 	wire  [31:0] mm_interconnect_0_usb_gpx_s1_readdata;                       // usb_gpx:readdata -> mm_interconnect_0:usb_gpx_s1_readdata
@@ -107,13 +105,33 @@ module finalsoc (
 	wire   [1:0] mm_interconnect_0_leds_pio_s1_address;                       // mm_interconnect_0:leds_pio_s1_address -> leds_pio:address
 	wire         mm_interconnect_0_leds_pio_s1_write;                         // mm_interconnect_0:leds_pio_s1_write -> leds_pio:write_n
 	wire  [31:0] mm_interconnect_0_leds_pio_s1_writedata;                     // mm_interconnect_0:leds_pio_s1_writedata -> leds_pio:writedata
-	wire  [31:0] mm_interconnect_0_key_s1_readdata;                           // key:readdata -> mm_interconnect_0:key_s1_readdata
-	wire   [1:0] mm_interconnect_0_key_s1_address;                            // mm_interconnect_0:key_s1_address -> key:address
+	wire  [31:0] mm_interconnect_0_key1_s1_readdata;                          // key1:readdata -> mm_interconnect_0:key1_s1_readdata
+	wire   [1:0] mm_interconnect_0_key1_s1_address;                           // mm_interconnect_0:key1_s1_address -> key1:address
 	wire         mm_interconnect_0_timer_0_s1_chipselect;                     // mm_interconnect_0:timer_0_s1_chipselect -> timer_0:chipselect
 	wire  [15:0] mm_interconnect_0_timer_0_s1_readdata;                       // timer_0:readdata -> mm_interconnect_0:timer_0_s1_readdata
 	wire   [3:0] mm_interconnect_0_timer_0_s1_address;                        // mm_interconnect_0:timer_0_s1_address -> timer_0:address
 	wire         mm_interconnect_0_timer_0_s1_write;                          // mm_interconnect_0:timer_0_s1_write -> timer_0:write_n
 	wire  [15:0] mm_interconnect_0_timer_0_s1_writedata;                      // mm_interconnect_0:timer_0_s1_writedata -> timer_0:writedata
+	wire         mm_interconnect_0_keycode_0_s1_chipselect;                   // mm_interconnect_0:keycode_0_s1_chipselect -> keycode_0:chipselect
+	wire  [31:0] mm_interconnect_0_keycode_0_s1_readdata;                     // keycode_0:readdata -> mm_interconnect_0:keycode_0_s1_readdata
+	wire   [1:0] mm_interconnect_0_keycode_0_s1_address;                      // mm_interconnect_0:keycode_0_s1_address -> keycode_0:address
+	wire         mm_interconnect_0_keycode_0_s1_write;                        // mm_interconnect_0:keycode_0_s1_write -> keycode_0:write_n
+	wire  [31:0] mm_interconnect_0_keycode_0_s1_writedata;                    // mm_interconnect_0:keycode_0_s1_writedata -> keycode_0:writedata
+	wire         mm_interconnect_0_keycode_1_s1_chipselect;                   // mm_interconnect_0:keycode_1_s1_chipselect -> keycode_1:chipselect
+	wire  [31:0] mm_interconnect_0_keycode_1_s1_readdata;                     // keycode_1:readdata -> mm_interconnect_0:keycode_1_s1_readdata
+	wire   [1:0] mm_interconnect_0_keycode_1_s1_address;                      // mm_interconnect_0:keycode_1_s1_address -> keycode_1:address
+	wire         mm_interconnect_0_keycode_1_s1_write;                        // mm_interconnect_0:keycode_1_s1_write -> keycode_1:write_n
+	wire  [31:0] mm_interconnect_0_keycode_1_s1_writedata;                    // mm_interconnect_0:keycode_1_s1_writedata -> keycode_1:writedata
+	wire         mm_interconnect_0_keycode_2_s1_chipselect;                   // mm_interconnect_0:keycode_2_s1_chipselect -> keycode_2:chipselect
+	wire  [31:0] mm_interconnect_0_keycode_2_s1_readdata;                     // keycode_2:readdata -> mm_interconnect_0:keycode_2_s1_readdata
+	wire   [1:0] mm_interconnect_0_keycode_2_s1_address;                      // mm_interconnect_0:keycode_2_s1_address -> keycode_2:address
+	wire         mm_interconnect_0_keycode_2_s1_write;                        // mm_interconnect_0:keycode_2_s1_write -> keycode_2:write_n
+	wire  [31:0] mm_interconnect_0_keycode_2_s1_writedata;                    // mm_interconnect_0:keycode_2_s1_writedata -> keycode_2:writedata
+	wire         mm_interconnect_0_keycode_3_s1_chipselect;                   // mm_interconnect_0:keycode_3_s1_chipselect -> keycode_3:chipselect
+	wire  [31:0] mm_interconnect_0_keycode_3_s1_readdata;                     // keycode_3:readdata -> mm_interconnect_0:keycode_3_s1_readdata
+	wire   [1:0] mm_interconnect_0_keycode_3_s1_address;                      // mm_interconnect_0:keycode_3_s1_address -> keycode_3:address
+	wire         mm_interconnect_0_keycode_3_s1_write;                        // mm_interconnect_0:keycode_3_s1_write -> keycode_3:write_n
+	wire  [31:0] mm_interconnect_0_keycode_3_s1_writedata;                    // mm_interconnect_0:keycode_3_s1_writedata -> keycode_3:writedata
 	wire         mm_interconnect_0_spi_0_spi_control_port_chipselect;         // mm_interconnect_0:spi_0_spi_control_port_chipselect -> spi_0:spi_select
 	wire  [15:0] mm_interconnect_0_spi_0_spi_control_port_readdata;           // spi_0:data_to_cpu -> mm_interconnect_0:spi_0_spi_control_port_readdata
 	wire   [2:0] mm_interconnect_0_spi_0_spi_control_port_address;            // mm_interconnect_0:spi_0_spi_control_port_address -> spi_0:mem_addr
@@ -124,7 +142,7 @@ module finalsoc (
 	wire         irq_mapper_receiver1_irq;                                    // timer_0:irq -> irq_mapper:receiver1_irq
 	wire         irq_mapper_receiver2_irq;                                    // spi_0:irq -> irq_mapper:receiver2_irq
 	wire  [31:0] nios2_gen2_0_irq_irq;                                        // irq_mapper:sender_irq -> nios2_gen2_0:irq
-	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [acc:reset_n, hex_digits_pio:reset_n, irq_mapper:reset, jtag_uart_0:rst_n, key:reset_n, keycode:reset_n, leds_pio:reset_n, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, rst_translator:in_reset, sdram_pll:reset, spi_0:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
+	wire         rst_controller_reset_out_reset;                              // rst_controller:reset_out -> [acc:reset_n, hex_digits_pio:reset_n, irq_mapper:reset, jtag_uart_0:rst_n, key1:reset_n, keycode_0:reset_n, keycode_1:reset_n, keycode_2:reset_n, keycode_3:reset_n, leds_pio:reset_n, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n, onchip_memory2_0:reset, rst_translator:in_reset, sdram_pll:reset, spi_0:reset_n, sysid_qsys_0:reset_n, timer_0:reset_n, usb_gpx:reset_n, usb_irq:reset_n, usb_rst:reset_n]
 	wire         rst_controller_reset_out_reset_req;                          // rst_controller:reset_req -> [nios2_gen2_0:reset_req, onchip_memory2_0:reset_req, rst_translator:reset_req_in]
 	wire         nios2_gen2_0_debug_reset_request_reset;                      // nios2_gen2_0:debug_reset_request -> [rst_controller:reset_in1, rst_controller_001:reset_in1]
 	wire         rst_controller_001_reset_out_reset;                          // rst_controller_001:reset_out -> [mm_interconnect_0:sdram_reset_reset_bridge_in_reset_reset, sdram:reset_n]
@@ -161,23 +179,56 @@ module finalsoc (
 		.av_irq         (irq_mapper_receiver0_irq)                                     //               irq.irq
 	);
 
-	finalsoc_key key (
-		.clk      (clk_clk),                           //                 clk.clk
-		.reset_n  (~rst_controller_reset_out_reset),   //               reset.reset_n
-		.address  (mm_interconnect_0_key_s1_address),  //                  s1.address
-		.readdata (mm_interconnect_0_key_s1_readdata), //                    .readdata
-		.in_port  (key_external_connection_export)     // external_connection.export
+	finalsoc_key1 key1 (
+		.clk      (clk_clk),                            //                 clk.clk
+		.reset_n  (~rst_controller_reset_out_reset),    //               reset.reset_n
+		.address  (mm_interconnect_0_key1_s1_address),  //                  s1.address
+		.readdata (mm_interconnect_0_key1_s1_readdata), //                    .readdata
+		.in_port  (key_external_connection_export)      // external_connection.export
 	);
 
-	finalsoc_keycode keycode (
-		.clk        (clk_clk),                                 //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),         //               reset.reset_n
-		.address    (mm_interconnect_0_keycode_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_0_keycode_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_0_keycode_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_0_keycode_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_0_keycode_s1_readdata),   //                    .readdata
-		.out_port   (keycode_export)                           // external_connection.export
+	finalsoc_keycode_0 keycode_0 (
+		.clk        (clk_clk),                                   //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_0_keycode_0_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_0_keycode_0_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_0_keycode_0_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_0_keycode_0_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_0_keycode_0_s1_readdata),   //                    .readdata
+		.out_port   (keycode_0_export)                           // external_connection.export
+	);
+
+	finalsoc_keycode_0 keycode_1 (
+		.clk        (clk_clk),                                   //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_0_keycode_1_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_0_keycode_1_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_0_keycode_1_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_0_keycode_1_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_0_keycode_1_s1_readdata),   //                    .readdata
+		.out_port   (keycode_1_export)                           // external_connection.export
+	);
+
+	finalsoc_keycode_0 keycode_2 (
+		.clk        (clk_clk),                                   //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_0_keycode_2_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_0_keycode_2_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_0_keycode_2_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_0_keycode_2_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_0_keycode_2_s1_readdata),   //                    .readdata
+		.out_port   (keycode_2_export)                           // external_connection.export
+	);
+
+	finalsoc_keycode_0 keycode_3 (
+		.clk        (clk_clk),                                   //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_0_keycode_3_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_0_keycode_3_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_0_keycode_3_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_0_keycode_3_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_0_keycode_3_s1_readdata),   //                    .readdata
+		.out_port   (keycode_3_export)                           // external_connection.export
 	);
 
 	finalsoc_leds_pio leds_pio (
@@ -376,13 +427,28 @@ module finalsoc (
 		.jtag_uart_0_avalon_jtag_slave_writedata        (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_writedata),   //                                         .writedata
 		.jtag_uart_0_avalon_jtag_slave_waitrequest      (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_waitrequest), //                                         .waitrequest
 		.jtag_uart_0_avalon_jtag_slave_chipselect       (mm_interconnect_0_jtag_uart_0_avalon_jtag_slave_chipselect),  //                                         .chipselect
-		.key_s1_address                                 (mm_interconnect_0_key_s1_address),                            //                                   key_s1.address
-		.key_s1_readdata                                (mm_interconnect_0_key_s1_readdata),                           //                                         .readdata
-		.keycode_s1_address                             (mm_interconnect_0_keycode_s1_address),                        //                               keycode_s1.address
-		.keycode_s1_write                               (mm_interconnect_0_keycode_s1_write),                          //                                         .write
-		.keycode_s1_readdata                            (mm_interconnect_0_keycode_s1_readdata),                       //                                         .readdata
-		.keycode_s1_writedata                           (mm_interconnect_0_keycode_s1_writedata),                      //                                         .writedata
-		.keycode_s1_chipselect                          (mm_interconnect_0_keycode_s1_chipselect),                     //                                         .chipselect
+		.key1_s1_address                                (mm_interconnect_0_key1_s1_address),                           //                                  key1_s1.address
+		.key1_s1_readdata                               (mm_interconnect_0_key1_s1_readdata),                          //                                         .readdata
+		.keycode_0_s1_address                           (mm_interconnect_0_keycode_0_s1_address),                      //                             keycode_0_s1.address
+		.keycode_0_s1_write                             (mm_interconnect_0_keycode_0_s1_write),                        //                                         .write
+		.keycode_0_s1_readdata                          (mm_interconnect_0_keycode_0_s1_readdata),                     //                                         .readdata
+		.keycode_0_s1_writedata                         (mm_interconnect_0_keycode_0_s1_writedata),                    //                                         .writedata
+		.keycode_0_s1_chipselect                        (mm_interconnect_0_keycode_0_s1_chipselect),                   //                                         .chipselect
+		.keycode_1_s1_address                           (mm_interconnect_0_keycode_1_s1_address),                      //                             keycode_1_s1.address
+		.keycode_1_s1_write                             (mm_interconnect_0_keycode_1_s1_write),                        //                                         .write
+		.keycode_1_s1_readdata                          (mm_interconnect_0_keycode_1_s1_readdata),                     //                                         .readdata
+		.keycode_1_s1_writedata                         (mm_interconnect_0_keycode_1_s1_writedata),                    //                                         .writedata
+		.keycode_1_s1_chipselect                        (mm_interconnect_0_keycode_1_s1_chipselect),                   //                                         .chipselect
+		.keycode_2_s1_address                           (mm_interconnect_0_keycode_2_s1_address),                      //                             keycode_2_s1.address
+		.keycode_2_s1_write                             (mm_interconnect_0_keycode_2_s1_write),                        //                                         .write
+		.keycode_2_s1_readdata                          (mm_interconnect_0_keycode_2_s1_readdata),                     //                                         .readdata
+		.keycode_2_s1_writedata                         (mm_interconnect_0_keycode_2_s1_writedata),                    //                                         .writedata
+		.keycode_2_s1_chipselect                        (mm_interconnect_0_keycode_2_s1_chipselect),                   //                                         .chipselect
+		.keycode_3_s1_address                           (mm_interconnect_0_keycode_3_s1_address),                      //                             keycode_3_s1.address
+		.keycode_3_s1_write                             (mm_interconnect_0_keycode_3_s1_write),                        //                                         .write
+		.keycode_3_s1_readdata                          (mm_interconnect_0_keycode_3_s1_readdata),                     //                                         .readdata
+		.keycode_3_s1_writedata                         (mm_interconnect_0_keycode_3_s1_writedata),                    //                                         .writedata
+		.keycode_3_s1_chipselect                        (mm_interconnect_0_keycode_3_s1_chipselect),                   //                                         .chipselect
 		.leds_pio_s1_address                            (mm_interconnect_0_leds_pio_s1_address),                       //                              leds_pio_s1.address
 		.leds_pio_s1_write                              (mm_interconnect_0_leds_pio_s1_write),                         //                                         .write
 		.leds_pio_s1_readdata                           (mm_interconnect_0_leds_pio_s1_readdata),                      //                                         .readdata
