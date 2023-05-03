@@ -68,7 +68,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
 	logic [1:0] signs;
 	logic [1:0] hundreds;
-	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig;
+	logic [9:0] drawxsig, drawysig, onexsig, oneysig, twoxsig, twoysig;
 	logic [7:0] keycode;
 
 //=======================================================
@@ -181,30 +181,28 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //		.blue(VGA_B)
 //	);
 	
-	ball bm(
-		.Reset(Reset_h),
-		.frame_clk(VGA_VS),
-		.keycode(keycode),
-		.BallX(ballxsig), //out
-		.BallY(ballysig),
-		.BallS(ballsizesig)
-	);
+	PlayerControl PlayerControl(
+		.Reset(Reset_h), 
+		.frame_clk(VGA_VS), 
+		.keycode(keycode), 
+		.Player1X(onexsig), 
+		.Player1Y(oneysig),
+		.Player2X(twoxsig),
+		.Player2Y(twoysig),
+		 );
 	
 	color_mapper cm(
-		.BallX(ballxsig),
-		.BallY(ballysig),
-		.DrawX(drawxsig),
+		.BallX1(onexsig), 
+		.BallY1(oneysig),
+		.BallX2(twoxsig), 
+		.BallY2(twoysig), 
+		.DrawX(drawxsig), 
 		.DrawY(drawysig),
-		.Ball_size(ballsizesig),
 		.blank(blank),
 		.vga_clk(VGA_Clk),
-		.Red(VGA_R), //out
-		.Green(VGA_G),
+		.Red(VGA_R), 
+		.Green(VGA_G), 
 		.Blue(VGA_B)
-	);
-	
-	
-	
-	
+		);
 
 endmodule

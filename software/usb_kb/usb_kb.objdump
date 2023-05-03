@@ -37,49 +37,49 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   9 .debug_aranges 00000fc8  00000000  00000000  00015708  2**3
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_info   0002653a  00000000  00000000  000166d0  2**0
+ 10 .debug_info   000265a6  00000000  00000000  000166d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev 00009b62  00000000  00000000  0003cc0a  2**0
+ 11 .debug_abbrev 00009b62  00000000  00000000  0003cc76  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_line   0000c1f0  00000000  00000000  0004676c  2**0
+ 12 .debug_line   0000c1f0  00000000  00000000  000467d8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_frame  00002850  00000000  00000000  0005295c  2**2
+ 13 .debug_frame  00002850  00000000  00000000  000529c8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00004282  00000000  00000000  000551ac  2**0
+ 14 .debug_str    0000430d  00000000  00000000  00055218  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_loc    00017b11  00000000  00000000  0005942e  2**0
+ 15 .debug_loc    00017b11  00000000  00000000  00059525  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_alt_sim_info 00000040  00000000  00000000  00070f40  2**2
+ 16 .debug_alt_sim_info 00000040  00000000  00000000  00071038  2**2
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_ranges 00001930  00000000  00000000  00070f80  2**3
+ 17 .debug_ranges 00001930  00000000  00000000  00071078  2**3
                   CONTENTS, READONLY, DEBUGGING
- 18 .thread_model 00000003  00000000  00000000  00076196  2**0
+ 18 .thread_model 00000003  00000000  00000000  0007628e  2**0
                   CONTENTS, READONLY
- 19 .cpu          0000000c  00000000  00000000  00076199  2**0
+ 19 .cpu          0000000c  00000000  00000000  00076291  2**0
                   CONTENTS, READONLY
- 20 .qsys         00000001  00000000  00000000  000761a5  2**0
+ 20 .qsys         00000001  00000000  00000000  0007629d  2**0
                   CONTENTS, READONLY
- 21 .simulation_enabled 00000001  00000000  00000000  000761a6  2**0
+ 21 .simulation_enabled 00000001  00000000  00000000  0007629e  2**0
                   CONTENTS, READONLY
- 22 .sysid_hash   00000004  00000000  00000000  000761a7  2**0
+ 22 .sysid_hash   00000004  00000000  00000000  0007629f  2**0
                   CONTENTS, READONLY
- 23 .sysid_base   00000004  00000000  00000000  000761ab  2**0
+ 23 .sysid_base   00000004  00000000  00000000  000762a3  2**0
                   CONTENTS, READONLY
- 24 .sysid_time   00000004  00000000  00000000  000761af  2**0
+ 24 .sysid_time   00000004  00000000  00000000  000762a7  2**0
                   CONTENTS, READONLY
- 25 .stderr_dev   0000000b  00000000  00000000  000761b3  2**0
+ 25 .stderr_dev   0000000b  00000000  00000000  000762ab  2**0
                   CONTENTS, READONLY
- 26 .stdin_dev    0000000b  00000000  00000000  000761be  2**0
+ 26 .stdin_dev    0000000b  00000000  00000000  000762b6  2**0
                   CONTENTS, READONLY
- 27 .stdout_dev   0000000b  00000000  00000000  000761c9  2**0
+ 27 .stdout_dev   0000000b  00000000  00000000  000762c1  2**0
                   CONTENTS, READONLY
- 28 .sopc_system_name 00000008  00000000  00000000  000761d4  2**0
+ 28 .sopc_system_name 00000008  00000000  00000000  000762cc  2**0
                   CONTENTS, READONLY
- 29 .quartus_project_dir 0000001f  00000000  00000000  000761dc  2**0
+ 29 .quartus_project_dir 00000043  00000000  00000000  000762d4  2**0
                   CONTENTS, READONLY
- 30 .jdi          00004f1a  00000000  00000000  000761fb  2**0
+ 30 .jdi          00004f1a  00000000  00000000  00076317  2**0
                   CONTENTS, READONLY
- 31 .sopcinfo     0008bea4  00000000  00000000  0007b115  2**0
+ 31 .sopcinfo     00090caa  00000000  00000000  0007b231  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 08000000 l    d  .entry	00000000 .entry
@@ -2969,10 +2969,10 @@ BYTE MAXreg_rd(BYTE reg) {
  80016bc:	df000604 	addi	fp,sp,24
  80016c0:	2005883a 	mov	r2,r4
  80016c4:	e0bfff05 	stb	r2,-4(fp)
-	//read return code from SPI peripheral (see Intel documentation)
 	//if return code < 0 print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return val
+
 	BYTE val;
 	int status = alt_avalon_spi_command(SPI_0_BASE, 0, 1, &reg, 1, &val, 0);
  80016c8:	e0ffff04 	addi	r3,fp,-4

@@ -86,6 +86,7 @@ BYTE MAXreg_rd(BYTE reg) {
 	//if return code < 0 print an error
 	//deselect MAX3421E (may not be necessary if you are using SPI peripheral)
 	//return val
+
 	BYTE val;
 	int status = alt_avalon_spi_command(SPI_0_BASE, 0, 1, &reg, 1, &val, 0);
 	if (status < 0) {

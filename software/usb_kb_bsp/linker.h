@@ -1,10 +1,10 @@
 /*
  * linker.h - Linker script mapping information
  *
- * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'lab62soc'
- * SOPC Builder design path: ../../lab62soc.sopcinfo
+ * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'finalsoc'
+ * SOPC Builder design path: ../../finalsoc.sopcinfo
  *
- * Generated: Sun Mar 19 17:06:17 CDT 2023
+ * Generated: Wed May 03 01:01:16 CDT 2023
  */
 
 /*

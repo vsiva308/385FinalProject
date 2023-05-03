@@ -13,30 +13,19 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
+module  color_mapper ( input        [9:0] BallX1, BallY1, BallX2, BallY2, DrawX, DrawY,
 							  input logic blank,
 							  input logic vga_clk,
                        output logic [3:0]  Red, Green, Blue );
     
-    logic ball_on;
+    logic ball_on1, ball_on2;
 	 logic [3:0] bg_red, bg_green, bg_blue;
- /* Old Ball: Generated square box by checking if the current pixel is within a square of length
-    2*Ball_Size, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
-	 
-    if ((DrawX >= BallX - Ball_size) &&
-       (DrawX <= BallX + Ball_size) &&
-       (DrawY >= BallY - Ball_size) &&
-       (DrawY <= BallY + Ball_size))
-
-     New Ball: Generates (pixelated) circle by using the standard circle formula.  Note that while 
-     this single line is quite powerful descriptively, it causes the synthesis tool to use up three
-     of the 12 available multipliers on the chip!  Since the multiplicants are required to be signed,
-	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
 	  
-    int DistX, DistY, Size;
-	 assign DistX = DrawX - BallX;
-    assign DistY = DrawY - BallY;
-    assign Size = Ball_size;
+    int DistX1, DistY1, DistX2, DistY2, Size;
+	 assign DistX1 = DrawX - BallX1;
+    assign DistY1 = DrawY - BallY1;
+	 assign DistX2 = DrawX - BallX2;
+    assign DistY2 = DrawY - BallY2;
 	 
 	 //drawing background logic -> bg registers -> combinational logic with ball overlap
 	 streetfighter_example bg (
@@ -51,21 +40,37 @@ module  color_mapper ( input        [9:0] BallX, BallY, DrawX, DrawY, Ball_size,
 	  
 	 //logic for coloring ball or background (combinational since pixel logic is in ball.sv)
     always_comb
-    begin:Ball_on_proc
-        if ( ( DistX*DistX + DistY*DistY) <= (Size * Size) ) 
-            ball_on = 1'b1;
+    begin:Ball_on_proc1
+        //if ( ( DistX*DistX + DistY*DistY) <= (Size * Size) ) 
+		  if(DistX1 < 120 & DistX1 >= 0 & DistY1 < 180 & DistY1 >= 0)
+            ball_on1 = 1'b1;
         else 
-            ball_on = 1'b0;
+            ball_on1 = 1'b0;
+     end
+	  
+	 always_comb
+    begin:Ball_on_proc2
+        //if ( ( DistX*DistX + DistY*DistY) <= (Size * Size) ) 
+		  if(DistX2 < 120 & DistX2 >= 0 & DistY2 < 180 & DistY2 >= 0)
+            ball_on2 = 1'b1;
+        else 
+            ball_on2 = 1'b0;
      end 
        
     always_comb
     begin:RGB_Display
-        if ((ball_on == 1'b1)) //ball
+        if ((ball_on1 == 1'b1)) 
         begin 
-            Red = 4'hf;
-            Green = 4'h5;
-            Blue = 4'hf;
-        end       
+            Red = 8'h55;
+            Green = 8'hff;
+            Blue = 8'h00;
+        end
+		  else if((ball_on2 == 1'b1))
+		  begin
+				Red = 8'hff;
+            Green = 8'h55;
+            Blue = 8'h00;
+		  end       
         else 
         begin //background
             Red = bg_red; 
