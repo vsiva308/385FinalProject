@@ -35,5 +35,5 @@ PLLJ_PLLSPE_INFO.txt
 *.tcl
 *.txt # Explicitly add any text files used
 *~
-*example*
+#*example*
 *sopc_*
