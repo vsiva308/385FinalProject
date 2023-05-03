@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>May 3, 2023 1:59:00 AM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1683097140020</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>May 3, 2023 11:00:40 AM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1683129640313</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>C:\intelFPGA_lite\18.1\projects\FinalProject\Github\385FinalProject\software\usb_kb_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\finalsoc.sopcinfo</SopcDesignFile>
