@@ -71,6 +71,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0] drawxsig, drawysig, onexsig, oneysig, twoxsig, twoysig;
 	logic [7:0] keycode_0, keycode_1, keycode_2, keycode_3;
 	logic [7:0] akuma_hbar, ryu_hbar;
+	int AkumaKB, RyuKB;
+	int XDist;
 
 //=======================================================
 //  Structural coding
@@ -113,6 +115,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	
 	//Assign one button to reset
 	assign {Reset_h}=~ (KEY[0]);
+	
+	assign XDist = twoxsig - onexsig;
 
 	//Our A/D converter is only 12 bit
 //	assign VGA_R = Red[3:0];
@@ -188,18 +192,56 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.health(akuma_hbar)
 	);
 	
-	PlayerControl PlayerControl(
-		.Reset(Reset_h), 
-		.frame_clk(VGA_VS), 
+//	PlayerControl PlayerControl(
+//		.Reset(Reset_h), 
+//		.frame_clk(VGA_VS), 
+//		.keycode_0(keycode_0),
+//		.keycode_1(keycode_1),
+//		.keycode_2(keycode_2),
+//		.keycode_3(keycode_3),
+//		.Player1X(onexsig), 
+//		.Player1Y(oneysig),
+//		.Player2X(twoxsig),
+//		.Player2Y(twoysig),
+//		 );
+
+	ryu ryu_movement(
+		.Reset(Reset_h),
+		.frame_clk(VGA_VS),
 		.keycode_0(keycode_0),
 		.keycode_1(keycode_1),
 		.keycode_2(keycode_2),
 		.keycode_3(keycode_3),
-		.Player1X(onexsig), 
-		.Player1Y(oneysig),
-		.Player2X(twoxsig),
-		.Player2Y(twoysig),
-		 );
+		.XDist(XDist),
+		.Ryu_Knockback(RyuKB),
+		.RyuX(onexsig),
+		.RyuY(oneysig)
+	);
+	
+	akuma akuma_movement(
+		.Reset(Reset_h),
+		.frame_clk(VGA_VS),
+		.keycode_0(keycode_0),
+		.keycode_1(keycode_1),
+		.keycode_2(keycode_2),
+		.keycode_3(keycode_3),
+		.XDist(XDist),
+		.Akuma_Knockback(AkumaKB),
+		.AkumaX(twoxsig),
+		.AkumaY(twoysig)
+	);
+	
+	punch punch_control(
+		.Reset(Reset_h),
+		.frame_clk(VGA_VS),
+		.keycode_0(keycode_0),
+		.keycode_1(keycode_1),
+		.keycode_2(keycode_2),
+		.keycode_3(keycode_3),
+		.XDist(XDist),
+		.Ryu_Knockback(RyuKB),
+		.Akuma_Knockback(AkumaKB)
+	);
 	
 	color_mapper cm(
 		.RyuX(onexsig), 
