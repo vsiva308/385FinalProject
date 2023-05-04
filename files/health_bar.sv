@@ -7,7 +7,7 @@ module health_bar (
 
 	enum logic [1:0] {Waiting, Hit, Idle} curr_state, next_state;
 	logic decrement;
-	logic [7:0] hbar = 8'd240; //health bar
+	logic [7:0] hbar = 8'd250; //health bar
 	assign health = hbar;
 	
 	always_ff @ (posedge Clk or posedge Reset)
@@ -18,7 +18,7 @@ module health_bar (
 		end else begin
 			curr_state <= next_state;
 			if (decrement)
-				hbar <= hbar - 20;
+				hbar <= hbar - 10;
 		end
 	end
 	
