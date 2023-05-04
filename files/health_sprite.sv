@@ -8,8 +8,8 @@ module health_sprite(
 
 	parameter [9:0] Ryu_X_Health = 50; //left bound
 	parameter [9:0] Akuma_X_Health = 590; //right bound
-	parameter [9:0] Ryu_X_Max = 296; //50 + 246
-	parameter [9:0] Akuma_X_Min = 344; //590 - 246
+	parameter [9:0] Ryu_X_Max = 295; //50 + 245
+	parameter [9:0] Akuma_X_Min = 345; //590 - 245
 	parameter [9:0] Y_Health_U = 34;
 	parameter [9:0] Y_Health_L = 48;
 	
