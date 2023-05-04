@@ -191,19 +191,6 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.hit(),
 		.health(akuma_hbar)
 	);
-	
-//	PlayerControl PlayerControl(
-//		.Reset(Reset_h), 
-//		.frame_clk(VGA_VS), 
-//		.keycode_0(keycode_0),
-//		.keycode_1(keycode_1),
-//		.keycode_2(keycode_2),
-//		.keycode_3(keycode_3),
-//		.Player1X(onexsig), 
-//		.Player1Y(oneysig),
-//		.Player2X(twoxsig),
-//		.Player2Y(twoysig),
-//		 );
 
 	ryu ryu_movement(
 		.Reset(Reset_h),
