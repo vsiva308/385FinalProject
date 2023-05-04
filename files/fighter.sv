@@ -173,16 +173,6 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.DrawY(drawysig)
 	);
 	
-//	//testing
-//	streetfighter_example ex(
-//		.vga_clk(VGA_Clk),
-//		.DrawX(drawxsig), .DrawY(drawysig),
-//		.blank(blank),
-//		.red(VGA_R),
-//		.green(VGA_G),
-//		.blue(VGA_B)
-//	);
-	
 	PlayerControl PlayerControl(
 		.Reset(Reset_h), 
 		.frame_clk(VGA_VS), 
@@ -197,10 +187,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		 );
 	
 	color_mapper cm(
-		.BallX1(onexsig), 
-		.BallY1(oneysig),
-		.BallX2(twoxsig), 
-		.BallY2(twoysig), 
+		.RyuX(onexsig), 
+		.RyuY(oneysig),
+		.AkumaX(twoxsig), 
+		.AkumaY(twoysig), 
 		.DrawX(drawxsig), 
 		.DrawY(drawysig),
 		.blank(blank),
