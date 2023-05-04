@@ -1,10 +1,10 @@
 module streetfighter_rom (
 	input logic clock,
-	input logic [18:0] address,
-	output logic [2:0] q
+	input logic [16:0] address,
+	output logic [4:0] q
 );
 
-logic [2:0] memory [0:307199] /* synthesis ram_init_file = "./streetfighter/streetfighter.mif" */;
+logic [4:0] memory [0:76799] /* synthesis ram_init_file = "./streetfighter/streetfighter.mif" */;
 
 always_ff @ (posedge clock) begin
 	q <= memory[address];

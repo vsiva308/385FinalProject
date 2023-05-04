@@ -70,6 +70,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [1:0] hundreds;
 	logic [9:0] drawxsig, drawysig, onexsig, oneysig, twoxsig, twoysig;
 	logic [7:0] keycode_0, keycode_1, keycode_2, keycode_3;
+	logic [7:0] akuma_hbar, ryu_hbar;
 
 //=======================================================
 //  Structural coding
@@ -173,6 +174,20 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.DrawY(drawysig)
 	);
 	
+	health_bar ryu_health (
+		.Clk(VGA_VS),
+		.Reset(Reset_h),
+		.hit(),
+		.health(ryu_hbar)
+	);
+	
+	health_bar akuma_health (
+		.Clk(VGA_VS),
+		.Reset(Reset_h),
+		.hit(),
+		.health(akuma_hbar)
+	);
+	
 	PlayerControl PlayerControl(
 		.Reset(Reset_h), 
 		.frame_clk(VGA_VS), 
@@ -193,6 +208,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.AkumaY(twoysig), 
 		.DrawX(drawxsig), 
 		.DrawY(drawysig),
+		.RyuHealth(ryu_hbar),
+		.AkumaHealth(akuma_hbar),
 		.blank(blank),
 		.vga_clk(VGA_Clk),
 		.Red(VGA_R), 

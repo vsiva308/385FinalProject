@@ -72,11 +72,6 @@ module  PlayerControl ( input Reset, frame_clk,
 				begin
 				Player1_X_Motion <= 0;
 				JumpP1 <= 0;
-				//if ((keycode_0 >= 8'h20 || keycode_0 == 8'h00) && (keycode_1 >= 8'h20 || keycode_1 == 8'h00) && (keycode_2 <= 8'h20 || keycode_2 == 0) && (keycode_3 <= 8'h20 || keycode_3 == 8'h00))
-					//begin
-						//Player1_X_Motion <= 0;
-						//JumpP1 = 0;
-					//end
 				if (keycode_0 == 8'h04 || keycode_1 == 8'h04 || keycode_2 == 8'h04 || keycode_3 == 8'h04)
 					begin
 						Player1_X_Motion <= -2;//A
