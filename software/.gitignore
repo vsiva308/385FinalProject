@@ -1,0 +1,12 @@
+usb_kb_bsp/
+*/.settings/
+*/obj/
+
+*.cproject
+*.project
+*create
+usb_kb/Makefile
+usb_kb/readme
+*.elf
+*.map
+*.objdump
