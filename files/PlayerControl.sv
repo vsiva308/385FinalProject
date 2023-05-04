@@ -14,7 +14,8 @@ module  PlayerControl ( input Reset, frame_clk,
 	 
     parameter [9:0] Player1_X_Center=40;  // Center position on the X axis
 	 parameter [9:0] Player2_X_Center=480;  // Center position on the X axis
-    parameter [9:0] Player_Y_Center=220;  // Center position on the Y axis
+    parameter [9:0] Player1_Y_Center=220;  // Center position on the Y axis
+	 parameter [9:0] Player2_Y_Center=160;  // Topleft position on the Y axis
     parameter [9:0] Bound_X_Min=4;       // Leftmost point on the X axis
     parameter [9:0] Bound_X_Max=519;     // Rightmost point on the X axis
     parameter [9:0] Bound_Y_Min=0;       // Topmost point on the Y axis
@@ -27,8 +28,8 @@ module  PlayerControl ( input Reset, frame_clk,
 	 assign Player1_Width = 120;
 	 assign Player1_Height = 180;
    
-	 assign Player2_Width = 120;
-	 assign Player2_Height = 180;
+	 assign Player2_Width = 140;
+	 assign Player2_Height = 240;
 	 
 	 logic[9:0] Player1_left;
 	 logic[9:0] Player1_right;
@@ -104,7 +105,7 @@ module  PlayerControl ( input Reset, frame_clk,
         begin 
             //Player1_Y_Motion <= 10'd0; //Ball_Y_Step;
 				Player1_X_Motion <= 10'd0; //Ball_X_Step;
-				Player1_Y_Pos <= Player_Y_Center;
+				Player1_Y_Pos <= Player1_Y_Center;
 				Player1_X_Pos <= Player1_X_Center;
         end	
 		  else
@@ -156,7 +157,7 @@ module  PlayerControl ( input Reset, frame_clk,
         begin 
             //Player1_Y_Motion <= 10'd0; //Ball_Y_Step;
 				Player2_X_Motion <= 10'd0; //Ball_X_Step;
-				Player2_Y_Pos <= Player_Y_Center;
+				Player2_Y_Pos <= Player2_Y_Center;
 				Player2_X_Pos <= Player2_X_Center;
         end
 		  else
@@ -166,22 +167,22 @@ module  PlayerControl ( input Reset, frame_clk,
 						Player2_X_Motion <= 0;
 						JumpP2 = 0;
 					end
-				if (keycode_0 == 8'h5c || keycode_1 == 8'h5c || keycode_2 == 8'h5c || keycode_3 == 8'h5c)
+				if (keycode_0 == 8'h0d || keycode_1 == 8'h0d || keycode_2 == 8'h0d || keycode_3 == 8'h0d)
 					begin
 						Player2_X_Motion <= -2;//A
 						JumpP2 <= 0;
 					end
-				if (keycode_0 == 8'h5e || keycode_1 == 8'h5e || keycode_2 == 8'h5e || keycode_3 == 8'h5e)
+				if (keycode_0 == 8'h0f || keycode_1 == 8'h0f || keycode_2 == 8'h0f || keycode_3 == 8'h0f)
 					begin
 						Player2_X_Motion <= 2;//D
 						JumpP2 <= 0;
 					end
-				if (keycode_0 == 8'h5d || keycode_1 == 8'h5d || keycode_2 == 8'h5d || keycode_3 == 8'h5d)
+				if (keycode_0 == 8'h0e || keycode_1 == 8'h0e || keycode_2 == 8'h0e || keycode_3 == 8'h0e)
 					begin
 						JumpP2 <= 0; //S
 						Player2_X_Motion <= 0;
 					end
-				if (keycode_0 == 8'h60 || keycode_1 == 8'h60 || keycode_2 == 8'h60 || keycode_3 == 8'h60)
+				if (keycode_0 == 8'h0c || keycode_1 == 8'h0c || keycode_2 == 8'h0c || keycode_3 == 8'h0c)
 					begin
 						JumpP2 <= 1; //W
 					end

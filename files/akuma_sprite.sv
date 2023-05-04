@@ -21,8 +21,8 @@ assign negedge_vga_clk = ~vga_clk;
 //assign rom_address = ((DrawX * 98) / 640) + (((DrawY * 175) / 480) * 98);
 
 always_comb begin
-	if ((DrawX >= AkumaX) && (DrawX < AkumaX + 105) && (DrawY >= AkumaY) && (DrawY < AkumaY + 180))
-			rom_address = (DrawX - AkumaX) + ((DrawY - AkumaY) * 105);
+	if ((DrawX >= AkumaX) && (DrawX < AkumaX + 140) && (DrawY >= AkumaY) && (DrawY < AkumaY + 240))
+			rom_address = (DrawX - AkumaX) + ((DrawY - AkumaY) * 140);
 	else
 			rom_address = 15'd0;
 end
