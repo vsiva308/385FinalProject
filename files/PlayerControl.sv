@@ -9,36 +9,31 @@ module  PlayerControl ( input Reset, frame_clk,
 	 logic [9:0] Player2_X_Pos, Player2_Y_Pos;
 	 logic [9:0] Player2_X_Motion, Player2_Y_Motion;
 	 
-	 //logic Jump;
-	 //enum logic [4:0] {Rest, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O} curr_jstate, next_jstate;
-	 
     parameter [9:0] Player1_X_Center=40;  // Center position on the X axis
 	 parameter [9:0] Player2_X_Center=480;  // Center position on the X axis
     parameter [9:0] Player_Y_Center=220;  // Center position on the Y axis
     parameter [9:0] Bound_X_Min=4;       // Leftmost point on the X axis
-    parameter [9:0] Bound_X_Max=519;     // Rightmost point on the X axis
+    parameter [9:0] Bound_X_Max=639;     // Rightmost point on the X axis
     parameter [9:0] Bound_Y_Min=0;       // Topmost point on the Y axis
     parameter [9:0] Bound_Y_Max=479;     // Bottommost point on the Y axis
     parameter [9:0] Ball_X_Step=2;      // Step size on the X axis
     parameter [9:0] Ball_Y_Step=2;      // Step size on the Y axis
-
-    //assign Ball_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	 
-	 assign Player1_Width = 120;
-	 assign Player1_Height = 180;
+	 int Player1_Width = 120;
+	 int Player1_Height = 180;
    
-	 assign Player2_Width = 120;
-	 assign Player2_Height = 180;
+	 int Player2_Width = 105;
+	 int Player2_Height = 180;
 	 
-	 logic[9:0] Player1_left;
-	 logic[9:0] Player1_right;
-	 logic[9:0] Player1_top;
-	 logic[9:0] Player1_bottom;
+	 int Player1_left;
+	 int Player1_right;
+	 int Player1_top;
+	 int Player1_bottom;
 	 
-	 logic[9:0] Player2_left;
-	 logic[9:0] Player2_right;
-	 logic[9:0] Player2_top;
-	 logic[9:0] Player2_bottom;
+	 int Player2_left;
+	 int Player2_right;
+	 int Player2_top;
+	 int Player2_bottom;
 	 
 	 logic[9:0] overlap_left;
 	 logic[9:0] overlap_right;
@@ -56,47 +51,12 @@ module  PlayerControl ( input Reset, frame_clk,
 	 logic[9:0] keycode_1P1X, keycode_1P1Y, keycode_1P2X, keycode_1P2Y;
 	 logic[9:0] keycode_2P1X, keycode_2P1Y, keycode_2P2X, keycode_2P2Y;
 	 logic[9:0] keycode_3P1X, keycode_3P1Y, keycode_3P2X, keycode_3P2Y;
-	
-	/*
-	 always_ff @ (posedge Reset or posedge frame_clk)
-	 begin: Player_Position
-			if(Reset)
-				begin
-					Player1_X_Pos <= Player1_X_Center;
-					Player2_X_Pos <= Player2_X_Center;
-					Player1_Y_Pos <= Player_Y_Center;
-					Player2_Y_Pos <= Player_Y_Center;
-					
-					//keycodeAllP1X <= 0;
-					//keycodeAllP1Y <= 0;
-					//keycodeAllP2X <= 0;
-					//keycodeAllP2Y <= 0;
-				end
-			else
-				begin	
-					Player1_Y_Pos <= (Player1_Y_Pos + keycodeAllP1X);// + Player1_Collision_Y);  // Update ball position
-					Player1_X_Pos <= (Player1_X_Pos + keycodeAllP1Y);// + Player1_Collision_X);
-		
-					Player2_Y_Pos <= (Player2_Y_Pos + keycodeAllP2X);// + Player2_Collision_Y);  // Update ball position
-					Player2_X_Pos <= (Player2_X_Pos + keycodeAllP2Y);// + Player2_Collision_X);
-				end
-	 end
-	 */
 	 
 	 assign Player1X = Player1_X_Pos;
     assign Player1Y = Player1_Y_Pos;
 	 
 	 assign Player2X = Player2_X_Pos;
     assign Player2Y = Player2_Y_Pos;
-	 	 
-	 //always_comb
-	 //begin
-			//keycodeAllP1X = keycode_0P1X + keycode_1P1X + keycode_2P1X + keycode_3P1X;
-			//keycodeAllP1Y = keycode_0P1Y + keycode_1P1Y + keycode_2P1Y + keycode_3P1Y;
-			//keycodeAllP2X = keycode_0P2X + keycode_1P2X + keycode_2P2X + keycode_3P2X;
-			//keycodeAllP2Y = keycode_0P2Y + keycode_1P2Y + keycode_2P2Y + keycode_3P2Y;
-	 //end
-	 
 	
     always_ff @ (posedge Reset or posedge frame_clk )
     begin: Move_Player1
@@ -109,11 +69,13 @@ module  PlayerControl ( input Reset, frame_clk,
         end	
 		  else
 				begin
-				if (keycode_0 <= 8'h20 && keycode_1 <= 8'h20 && keycode_2 <= 8'h20 && keycode_3 <= 8'h20)
-					begin
-						Player1_X_Motion <= 0;
-						JumpP1 = 0;
-					end
+				Player1_X_Motion <= 0;
+				JumpP1 <= 0;
+				//if ((keycode_0 >= 8'h20 || keycode_0 == 8'h00) && (keycode_1 >= 8'h20 || keycode_1 == 8'h00) && (keycode_2 <= 8'h20 || keycode_2 == 0) && (keycode_3 <= 8'h20 || keycode_3 == 8'h00))
+					//begin
+						//Player1_X_Motion <= 0;
+						//JumpP1 = 0;
+					//end
 				if (keycode_0 == 8'h04 || keycode_1 == 8'h04 || keycode_2 == 8'h04 || keycode_3 == 8'h04)
 					begin
 						Player1_X_Motion <= -2;//A
@@ -161,27 +123,29 @@ module  PlayerControl ( input Reset, frame_clk,
         end
 		  else
 				begin
-				if ((keycode_0 >= 8'h20 || keycode_0 == 8'h00) && (keycode_1 >= 8'h20 || keycode_1 == 8'h00) && (keycode_2 >= 8'h20 || keycode_2 == 8'h00) & (keycode_3 >= 8'h20 || keycode_3 == 8'h00))
-					begin
-						Player2_X_Motion <= 0;
-						JumpP2 = 0;
-					end
-				if (keycode_0 == 8'h5c || keycode_1 == 8'h5c || keycode_2 == 8'h5c || keycode_3 == 8'h5c)
+				Player2_X_Motion <= 0;
+				JumpP2 = 0;
+				//if ((keycode_0 <= 8'h20 || keycode_0 == 8'h00) && (keycode_1 <= 8'h20 || keycode_1 == 8'h00) && (keycode_2 <= 8'h20 || keycode_2 == 8'h00) & (keycode_3 <= 8'h20 || keycode_3 == 8'h00))
+					//begin
+						//Player2_X_Motion <= 0;
+						//JumpP2 = 0;
+					//end
+				if (keycode_0 == 8'h0d || keycode_1 == 8'h0d || keycode_2 == 8'h0d || keycode_3 == 8'h0d)
 					begin
 						Player2_X_Motion <= -2;//A
 						JumpP2 <= 0;
 					end
-				if (keycode_0 == 8'h5e || keycode_1 == 8'h5e || keycode_2 == 8'h5e || keycode_3 == 8'h5e)
+				if (keycode_0 == 8'h0f || keycode_1 == 8'h0f || keycode_2 == 8'h0f || keycode_3 == 8'h0f)
 					begin
 						Player2_X_Motion <= 2;//D
 						JumpP2 <= 0;
 					end
-				if (keycode_0 == 8'h5d || keycode_1 == 8'h5d || keycode_2 == 8'h5d || keycode_3 == 8'h5d)
+				if (keycode_0 == 8'h0e || keycode_1 == 8'h0e || keycode_2 == 8'h0e || keycode_3 == 8'h0e)
 					begin
 						JumpP2 <= 0; //S
 						Player2_X_Motion <= 0;
 					end
-				if (keycode_0 == 8'h60 || keycode_1 == 8'h60 || keycode_2 == 8'h60 || keycode_3 == 8'h60)
+				if (keycode_0 == 8'h0c || keycode_1 == 8'h0c || keycode_2 == 8'h0c || keycode_3 == 8'h0c)
 					begin
 						JumpP2 <= 1; //W
 					end
@@ -275,4 +239,4 @@ module  PlayerControl ( input Reset, frame_clk,
 				
 	 end
 
-endmodule 
+endmodule
