@@ -4,9 +4,9 @@ usb_kb_bsp/
 
 *.cproject
 *.project
-*create
+*create*
 usb_kb/Makefile
-usb_kb/readme
+usb_kb/readme.txt
 *.elf
 *.map
 *.objdump
