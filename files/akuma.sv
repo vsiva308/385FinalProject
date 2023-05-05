@@ -29,27 +29,27 @@ module  akuma ( input Reset, frame_clk,
 		  else
 				begin
 				Akuma_X_Motion <= 0;
-				JumpP2 = 0;
-				AkumaLeft = 1'b0;
-				AkumaRight = 1'b0;
-				AkumaCrouch = 1'b0;
+				JumpP2 <= 0;
+				AkumaLeft <= 1'b0;
+				AkumaRight <= 1'b0;
+				AkumaCrouch <= 1'b0;
 				if ((keycode_0 == 8'h0d || keycode_1 == 8'h0d || keycode_2 == 8'h0d || keycode_3 == 8'h0d) && (XDist > 105))
 					begin
 						Akuma_X_Motion <= -2;//A
 						JumpP2 <= 0;
-						AkumaLeft = 1'b1;
+						AkumaLeft <= 1'b1;
 					end
 				if ((keycode_0 == 8'h0f || keycode_1 == 8'h0f || keycode_2 == 8'h0f || keycode_3 == 8'h0f) && ((Akuma_X_Pos + 125) < Bound_X_Max))
 					begin
 						Akuma_X_Motion <= 2;//D
 						JumpP2 <= 0;
-						AkumaRight = 1'b1;
+						AkumaRight <= 1'b1;
 					end
 				if (keycode_0 == 8'h0e || keycode_1 == 8'h0e || keycode_2 == 8'h0e || keycode_3 == 8'h0e)
 					begin
 						JumpP2 <= 0; //S
 						Akuma_X_Motion <= 0;
-						AkumaCrouch = 1'b1;
+						AkumaCrouch <= 1'b1;
 					end
 				if (keycode_0 == 8'h0c || keycode_1 == 8'h0c || keycode_2 == 8'h0c || keycode_3 == 8'h0c)
 					begin

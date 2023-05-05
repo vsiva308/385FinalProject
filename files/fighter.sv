@@ -246,7 +246,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.PunchP1(Ryupunch),
 		.PunchP2(Akumapunch),
 		.hitP1(Ryuhit),
-		.hitP2(Akumahit)
+		.hitP2(Akumahit),
+		.crouchP1(RyuCrouch),
+		.crouchP2(AkumaCrouch)
 	);
 	
 	color_mapper cm(
@@ -280,9 +282,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	spriteMux akumaMux(
 		.punch(Akumapunch),
 		.jump(AkumaJump),
-		.crouch(RyuCrouch),
-		.left(RyuLeft),
-		.right(RyuRight),
+		.crouch(AkumaCrouch),
+		.left(AkumaLeft),
+		.right(AkumaRight),
 		.death(1'b0),
 		.spriteIndex(AkumaIndex)
 	);	

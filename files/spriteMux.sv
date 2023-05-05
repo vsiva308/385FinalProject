@@ -18,7 +18,7 @@ module spriteMux(
 			6'b000001: spriteIndex = 3'b001; //punch only
 			6'b000010: spriteIndex = 3'b010; //jump only
 			6'b000011: spriteIndex = 3'b001; //jump + punch
-			6'b0xx1xx: spriteIndex = 3'b011; //crouch
+			6'b0??1??: spriteIndex = 3'b011; //crouch
 			6'b001000: spriteIndex = 3'b100; //left only
 			6'b001001: spriteIndex = 3'b001; //left + punch
 			6'b001010: spriteIndex = 3'b010; //left + jump
@@ -31,7 +31,7 @@ module spriteMux(
 			6'b011001: spriteIndex = 3'b001; //right + left + punch
 			6'b011010: spriteIndex = 3'b010; //right + left + jump
 			6'b011011: spriteIndex = 3'b001; //right + left + jump + punch
-			6'b1xxxxx: spriteIndex = 3'b110; //death
+			6'b1?????: spriteIndex = 3'b110; //death
 			default: ;
 		endcase
 	end	

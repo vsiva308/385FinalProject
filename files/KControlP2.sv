@@ -1,4 +1,4 @@
-module KcontrolP2 (input clk, Punch, Reset, 
+module KcontrolP2 (input clk, Punch, Reset, crouch,
 					input int Xpos,
 					output int Ball_X_Motion);
 					
@@ -27,7 +27,9 @@ module KcontrolP2 (input clk, Punch, Reset,
 		unique case(curr_jstate)
 			Rest: 
 				begin
-					if(Punch)
+					if(crouch)
+						next_jstate = Rest;
+					else if(Punch)
 					begin
 						if(rightWallDist < 9)
 						begin
