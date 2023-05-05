@@ -23,7 +23,7 @@ module punch(input Reset, frame_clk,
 			if((keycode_0 == 8'h06) || (keycode_1 == 8'h06) || (keycode_2 == 8'h06) || (keycode_3 == 8'h06))
 				begin
 					PunchP1 <= 1'b1;
-					if((XDist < 120) && (fistPosP1 > P2Ypos))
+					if((XDist < 135) && (fistPosP1 > P2Ypos))
 						begin
 							hitP2 <= 1'b1;
 						end
@@ -32,7 +32,7 @@ module punch(input Reset, frame_clk,
 			if((keycode_0 == 8'h11) || (keycode_1 == 8'h11) || (keycode_2 == 8'h11) || (keycode_3 == 8'h11))
 				begin
 					PunchP2 <= 1'b1;
-					if((XDist < 120) && (fistPosP2 > P1Ypos))
+					if((XDist < 135) && (fistPosP2 > P1Ypos))
 						begin
 							hitP1 <= 1'b1;
 						end

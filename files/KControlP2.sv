@@ -97,12 +97,12 @@ module KcontrolP2 (input clk, Punch, Reset,
 		
 		case(curr_jstate)
 			Rest: Ball_X_Motion = 0;
-			A: Ball_X_Motion = 7;
-			B: Ball_X_Motion = 7;
-			C:	Ball_X_Motion = 5;
-			D: Ball_X_Motion = 5;
-			E: Ball_X_Motion = 3;
-			F: Ball_X_Motion = 3;
+			A: Ball_X_Motion = 9;
+			B: Ball_X_Motion = 8;
+			C:	Ball_X_Motion = 7;
+			D: Ball_X_Motion = 6;
+			E: Ball_X_Motion = 5;
+			F: Ball_X_Motion = 4;
 			G: Ball_X_Motion = rightWallDist;
 		endcase
 	end

@@ -12,6 +12,10 @@ module akuma_punch_sprite (
 	logic [3:0] palette_red, palette_green, palette_blue;
 
 	logic negedge_vga_clk;
+	
+	int AkumaXFist;
+	
+	assign AkumaXFist = AkumaX - 49;
 
 	// read from ROM on negedge, set pixel on posedge
 	assign negedge_vga_clk = ~vga_clk;
@@ -20,8 +24,8 @@ module akuma_punch_sprite (
 	// this will stretch out the sprite across the entire screen
 	
 	always_comb begin
-		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 184) && (DrawY >= AkumaY) && (DrawY < AkumaY + 240))
-				rom_address = ((((DrawX * 92) / 184) + (((DrawY * 120) / 240) * 92)) - (((AkumaX * 92) / 184) + (((AkumaY * 120) / 240) * 92)));
+		if ((DrawX >= AkumaXFist) && (DrawX < AkumaXFist + 184) && (DrawY >= AkumaY) && (DrawY < AkumaY + 240))
+				rom_address = ((((DrawX * 92) / 184) + (((DrawY * 120) / 240) * 92)) - (((AkumaXFist * 92) / 184) + (((AkumaY * 120) / 240) * 92)));
 		else
 				rom_address = 14'd0;
 	end
