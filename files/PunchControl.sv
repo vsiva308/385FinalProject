@@ -29,7 +29,7 @@ module PunchControl (input clk, PunchIn, Reset, hit,
 					if(PunchIn)
 						next_jstate = A;
 					if(hit)
-						next_jstate = H;
+						next_jstate = J;
 				end
 				
 			A: next_jstate = B;
@@ -41,10 +41,13 @@ module PunchControl (input clk, PunchIn, Reset, hit,
 			G: next_jstate = H;
 			H: next_jstate = I;
 			I: next_jstate = J;
-			J: begin
+			J: next_jstate = K;
+			K: next_jstate = L;
+			L: next_jstate = M;
+			M: begin
 					if((keycode_0 == keycode_punch) || (keycode_1 == keycode_punch) || (keycode_2 == keycode_punch) || (keycode_3 == keycode_punch))
 						begin
-							next_jstate = J;
+							next_jstate = M;
 						end
 					else
 						begin
@@ -80,14 +83,14 @@ module PunchControl (input clk, PunchIn, Reset, hit,
 			C: PunchOut = 1'b1;
 			D: PunchOut = 1'b1;
 			E: PunchOut = 1'b1;
-			F: PunchOut = 1'b0;
+			F: PunchOut = 1'b1;
 			G: PunchOut = 1'b0;
 			H: PunchOut = 1'b0;
 			I: PunchOut = 1'b0;
 			J: PunchOut = 1'b0;
-			//K: PunchOut = 1'b0;
-			//L: PunchOut = 1'b0;
-			//M: Ball_Y_Motion = 6;
+			K: PunchOut = 1'b0;
+			L: PunchOut = 1'b0;
+			M: PunchOut = 1'b0;
 			//N: Ball_Y_Motion = 6;
 			//O: Ball_Y_Motion = 8;
 			//P: Ball_Y_Motion = 0;
