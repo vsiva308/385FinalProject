@@ -12,6 +12,9 @@ input logic vga_clk,
 	logic [3:0] palette_red, palette_green, palette_blue;
 
 	logic negedge_vga_clk;
+	
+	logic[9:0] newRyuX;
+	assign newRyuX = RyuX;
 
 	// read from ROM on negedge, set pixel on posedge
 	assign negedge_vga_clk = ~vga_clk;

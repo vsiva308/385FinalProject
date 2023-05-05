@@ -9,7 +9,7 @@ module  akuma ( input Reset, frame_clk,
 	 
 	 parameter [9:0] Akuma_X_Center=480;  // Center position on the X axis
 	 parameter [9:0] Akuma_Y_Center=170;  // Topleft position on the Y axis
-	 parameter [9:0] Bound_X_Max=635;     // Rightmost point on the X axis
+	 parameter [9:0] Bound_X_Max=629;     // Rightmost point on the X axis
 	 
 	 int Akuma_Width = 140;
 	 int Akuma_Height = 240;
@@ -57,11 +57,13 @@ module  akuma ( input Reset, frame_clk,
 					end
 				 
 				Akuma_Y_Pos <= (Akuma_Y_Pos + Akuma_Y_Motion);  // Update ball position
-				Akuma_X_Pos <= (Akuma_X_Pos + Akuma_X_Motion + Akuma_Knockback);
+				if(Akuma_X_Pos > Bound_X_Max)
+					Akuma_X_Pos <= Bound_X_Max;
+				else
+					Akuma_X_Pos <= (Akuma_X_Pos + Akuma_X_Motion + Akuma_Knockback);	
 				end
+			end
 
-				
-		  end
 	 logic JumpP2 = 1'b0;
 	 
 	 Jcontrol JumpControl2(
