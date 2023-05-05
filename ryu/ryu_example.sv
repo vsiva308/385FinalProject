@@ -5,7 +5,7 @@ module ryu_example (
 	output logic [3:0] red, green, blue
 );
 
-logic [14:0] rom_address;
+logic [12:0] rom_address;
 logic [4:0] rom_q;
 
 logic [3:0] palette_red, palette_green, palette_blue;
@@ -17,7 +17,7 @@ assign negedge_vga_clk = ~vga_clk;
 
 // address into the rom = (x*xDim)/640 + ((y*yDim)/480) * xDim
 // this will stretch out the sprite across the entire screen
-assign rom_address = ((DrawX * 118) / 640) + (((DrawY * 180) / 480) * 118);
+assign rom_address = ((DrawX * 59) / 640) + (((DrawY * 90) / 480) * 59);
 
 always_ff @ (posedge vga_clk) begin
 	red <= 4'h0;

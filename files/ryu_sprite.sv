@@ -1,57 +1,78 @@
 module ryu_sprite (
 	input logic vga_clk,
 	input logic [9:0] DrawX, DrawY, RyuX, RyuY,
+	input logic [2:0] sprite,
 	input logic blank,
 	output logic [3:0] red, green, blue,
 	output logic ryu_on
 );
+	/*
+	==========================Dictionary=============================
+		0 - Standing
+		1 - Punching
+		2 - Jumping
+	=================================================================
+	*/
 
-logic [14:0] rom_address;
-logic [4:0] rom_q;
+	//=======================================================
+	//  Ryu Logic
+	//=======================================================
+	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue;
+	logic stand_on, punch_on;
 
-logic [3:0] palette_red, palette_green, palette_blue;
+	ryu_standing_sprite(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.RyuX(RyuX),
+		.RyuY(RyuY),
+		.blank(blank),
+		.red(stand_red),
+		.green(stand_green),
+		.blue(stand_blue),
+		.ryu_on(stand_on)
+	);
 
-logic negedge_vga_clk;
+	ryu_punch_sprite(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.RyuX(RyuX),
+		.RyuY(RyuY),
+		.blank(blank),
+		.red(punch_red),
+		.green(punch_green),
+		.blue(punch_blue),
+		.ryu_on(punch_on)
+	);
 
-// read from ROM on negedge, set pixel on posedge
-assign negedge_vga_clk = ~vga_clk;
-
-// address into the rom = (x*xDim)/640 + ((y*yDim)/480) * xDim
-// this will stretch out the sprite across the entire screen
-//assign rom_address = ((DrawX * 118) / 640) + (((DrawY * 180) / 480) * 118);
-
-always_comb begin
-	if ((DrawX >= RyuX) && (DrawX < RyuX + 118) && (DrawY >= RyuY) && (DrawY < RyuY + 180))
-			rom_address = (DrawX - RyuX) + ((DrawY - RyuY) * 118);
-	else
-			rom_address = 15'd0;
-end
-
-always_ff @ (posedge vga_clk) begin
-	red <= 4'h0;
-	green <= 4'h0;
-	blue <= 4'h0;
-	ryu_on <= 1'b0;
-
-	if (blank && ~((palette_blue == 4'hf) && (palette_red == 4'hf) && (palette_green == 4'h0))) begin
-		red <= palette_red;
-		green <= palette_green;
-		blue <= palette_blue;
-		ryu_on <= 1'b1;
+	//=======================================================
+	//  Ryu Select Logic
+	//=======================================================
+	always_comb
+	begin
+		red = 4'h0;
+		green = 4'h0;
+		blue = 4'h0;
+		ryu_on = 1'b0;
+		
+		case(sprite)
+			3'b000:
+			begin
+				red = stand_red;
+				green = stand_green;
+				blue = stand_blue;
+				ryu_on = stand_on;
+			end
+			3'b001:
+			begin
+				red = punch_red;
+				green = punch_green;
+				blue = punch_blue;
+				ryu_on = punch_on;
+			end
+			default: ;
+		endcase
 	end
-end
-
-ryu_rom ryu_rom (
-	.clock   (negedge_vga_clk),
-	.address (rom_address),
-	.q       (rom_q)
-);
-
-ryu_palette ryu_palette (
-	.index (rom_q),
-	.red   (palette_red),
-	.green (palette_green),
-	.blue  (palette_blue)
-);
 
 endmodule
