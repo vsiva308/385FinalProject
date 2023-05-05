@@ -14,6 +14,7 @@ module ryu_sprite (
 		3 - Crouching
 		4 - Walk Left
 		5 - Walk Right
+		6 - Death
 	=================================================================
 	*/
 
@@ -21,8 +22,8 @@ module ryu_sprite (
 	//  Ryu Logic
 	//=======================================================
 	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue, crouch_red, crouch_green, crouch_blue;
-	logic [3:0] left_red, left_green, left_blue, right_red, right_green, right_blue;
-	logic stand_on, punch_on, jump_on, crouch_on, left_on, right_on;
+	logic [3:0] left_red, left_green, left_blue, right_red, right_green, right_blue, death_red, death_green, death_blue;
+	logic stand_on, punch_on, jump_on, crouch_on, left_on, right_on, death_on;
 
 	ryu_standing_sprite standing(
 		.vga_clk(vga_clk),
@@ -101,6 +102,19 @@ module ryu_sprite (
 		.blue(right_blue),
 		.ryu_on(right_on)
 	);
+	
+	ryu_death_sprite death(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.RyuX(RyuX),
+		.RyuY(RyuY),
+		.blank(blank),
+		.red(death_red),
+		.green(death_green),
+		.blue(death_blue),
+		.ryu_on(death_on)
+	);
 
 	//=======================================================
 	//  Ryu Select Logic
@@ -154,6 +168,13 @@ module ryu_sprite (
 				green = right_green;
 				blue = right_blue;
 				ryu_on = right_on;
+			end
+			3'b110:
+			begin
+				red = death_red;
+				green = death_green;
+				blue = death_blue;
+				ryu_on = death_on;
 			end
 			default: 
 			begin

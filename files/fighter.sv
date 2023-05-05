@@ -75,7 +75,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic Akumahit, Ryuhit, Akumapunch, Ryupunch, RyuJump, AkumaJump, RyuCrouch, AkumaCrouch, Ryublock, Akumablock;
 	logic RyuLeft, RyuRight, AkumaLeft, AkumaRight;
 	logic RyuDeath, AkumaDeath;
-	logic GameOver;
+	logic GamePlaying;
 	int AkumaKB, RyuKB;
 	int XDist;
 

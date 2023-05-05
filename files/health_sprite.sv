@@ -13,15 +13,16 @@ module health_sprite(
 	parameter [9:0] Y_Health_U = 34;
 	parameter [9:0] Y_Health_L = 48;
 	
-	logic [9:0] Ryu_X_Upper, Akuma_X_Lower;
+	logic [9:0] Ryu_X_Lower, Akuma_X_Upper;
 	logic bar;
 	
-	assign Ryu_X_Upper = Ryu_X_Health + RyuHealth;
-	assign Akuma_X_Lower = Akuma_X_Health - AkumaHealth;
+	//assign Ryu_X_Upper = Ryu_X_Health + RyuHealth;
+	assign Ryu_X_Lower = Ryu_X_Max - RyuHealth;
+	assign Akuma_X_Upper = Akuma_X_Min + AkumaHealth;
 	
 	always_comb
 	begin
-		if ((((DrawX >= Ryu_X_Health) && (DrawX < Ryu_X_Upper) && (DrawX < Ryu_X_Max)) || ((DrawX >= Akuma_X_Lower) && (DrawX < Akuma_X_Health) && (DrawX >= Akuma_X_Min))) && (DrawY >= Y_Health_U) && (DrawY < Y_Health_L))
+		if ((((DrawX >= Ryu_X_Health) && (DrawX >= Ryu_X_Lower) && (DrawX < Ryu_X_Max)) || ((DrawX < Akuma_X_Upper) && (DrawX < Akuma_X_Health) && (DrawX >= Akuma_X_Min))) && (DrawY >= Y_Health_U) && (DrawY < Y_Health_L))
 			bar = 1'b1;
 		else
 			bar = 1'b0;
