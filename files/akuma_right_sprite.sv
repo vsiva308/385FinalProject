@@ -20,7 +20,7 @@ module akuma_right_sprite (
 	// this will stretch out the sprite across the entire screen
 	
 	always_comb begin
-		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 130) && (DrawY >= AkumaY) && (DrawY < AkumaY + 240))
+		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 129) && (DrawY >= AkumaY) && (DrawY < AkumaY + 240))
 				rom_address = ((((DrawX * 65) / 130) + (((DrawY * 120) / 240) * 65)) - (((AkumaX * 65) / 130) + (((AkumaY * 120) / 240) * 65)));
 		else
 				rom_address = 14'd0;

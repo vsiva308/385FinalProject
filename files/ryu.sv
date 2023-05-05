@@ -1,5 +1,6 @@
 module  ryu ( input Reset, frame_clk,
 					input [7:0] keycode_0, keycode_1, keycode_2, keycode_3,
+					input logic GamePlaying,
 					input int XDist, Ryu_Knockback,
                output logic [9:0]  RyuX, RyuY,
 					output logic RyuJump, RyuCrouch, RyuLeft, RyuRight);
@@ -28,7 +29,7 @@ module  ryu ( input Reset, frame_clk,
 				Ryu_Y_Pos <= Ryu_Y_Center;
 				Ryu_X_Pos <= Ryu_X_Center;
         end	
-		  else
+		  else if (GamePlaying)
 				begin
 				Ryu_X_Motion <= 0;
 				JumpP1 <= 0;

@@ -20,7 +20,7 @@ input logic vga_clk,
 	// this will stretch out the sprite across the entire screen
 	
 	always_comb begin
-		if ((DrawX >= RyuX) && (DrawX < RyuX + 120) && (DrawY >= RyuY) && (DrawY < RyuY + 180))
+		if ((DrawX >= RyuX) && (DrawX < RyuX + 119) && (DrawY >= RyuY) && (DrawY < RyuY + 179))
 				rom_address = ((((DrawX * 60) / 120) + (((DrawY * 90) / 180) * 60)) - (((RyuX * 60) / 120) + (((RyuY * 90) / 180) * 60)));
 		else
 				rom_address = 13'd0;
