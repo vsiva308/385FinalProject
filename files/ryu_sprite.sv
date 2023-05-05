@@ -12,6 +12,8 @@ module ryu_sprite (
 		1 - Punching
 		2 - Jumping
 		3 - Crouching
+		4 - Walk Left
+		5 - Walk Right
 	=================================================================
 	*/
 
@@ -105,7 +107,7 @@ module ryu_sprite (
 				blue = jump_blue;
 				ryu_on = jump_on;
 			end
-			3'b100:
+			3'b011:
 			begin
 				red = crouch_red;
 				green = crouch_green;
