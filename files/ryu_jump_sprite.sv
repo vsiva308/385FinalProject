@@ -20,7 +20,7 @@ module ryu_jump_sprite (
 	// this will stretch out the sprite across the entire screen
 	
 	always_comb begin
-		if ((DrawX >= RyuX) && (DrawX < RyuX + 108) && (DrawY >= RyuY) && (DrawY < RyuY + 144))
+		if ((DrawX >= RyuX) && (DrawX < RyuX + 107) && (DrawY >= RyuY) && (DrawY < RyuY + 144))
 				rom_address = ((((DrawX * 54) / 108) + (((DrawY * 77) / 144) * 54)) - (((RyuX * 54) / 108) + (((RyuY * 77) / 144) * 54)));
 		else
 				rom_address = 13'd0;
