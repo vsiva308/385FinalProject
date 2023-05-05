@@ -279,6 +279,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.AkumaIndex(AkumaIndex),
 		.blank(blank),
 		.vga_clk(VGA_Clk),
+		.death(~GamePlaying),
 		.Red(VGA_R), 
 		.Green(VGA_G), 
 		.Blue(VGA_B)

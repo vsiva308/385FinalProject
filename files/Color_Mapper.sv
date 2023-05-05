@@ -16,16 +16,17 @@
 module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, DrawY,
 							  input logic [7:0] RyuHealth, AkumaHealth,
 							  input logic blank,
-							  input logic vga_clk,
+							  input logic vga_clk, death,
 							  input logic [2:0] RyuIndex, AkumaIndex,
                        output logic [3:0]  Red, Green, Blue );
 							  
 	 logic ryu_on;
 	 logic akuma_on;
 	 logic health_on;
+	 logic ko_on;
 	 
 	 logic [3:0] bg_red, bg_green, bg_blue;
-	 logic [3:0] ryu_red, ryu_green, ryu_blue, akuma_red, akuma_green, akuma_blue;
+	 logic [3:0] ryu_red, ryu_green, ryu_blue, akuma_red, akuma_green, akuma_blue, ko_red, ko_green, ko_blue;
 	 
 	 
 	 //drawing background logic -> bg registers -> combinational logic with ball overlap
@@ -37,6 +38,17 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 		.red(bg_red),
 		.green(bg_green),
 		.blue(bg_blue)
+	);
+	
+	ko_sprite ko (
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.blank(blank),
+		.red(ko_red),
+		.green(ko_green),
+		.blue(ko_blue),
+		.ko_on(ko_on)
 	);
 	
 	ryu_sprite ryu (
@@ -76,25 +88,6 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 		.blank(blank),
 		.health_on(health_on)
 	);
-	  
-	 //logic for coloring ball or background (combinational since pixel logic is in ball.sv)
-//    always_comb
-//    begin:Ball_on_proc1
-//        //if ( ( DistX*DistX + DistY*DistY) <= (Size * Size) ) 
-//		  if(DistX1 < 120 & DistX1 >= 0 & DistY1 < 180 & DistY1 >= 0)
-//            ball_on1 = 1'b1;
-//        else 
-//            ball_on1 = 1'b0;
-//     end
-//	  
-//	 always_comb
-//    begin:Ball_on_proc2
-//        //if ( ( DistX*DistX + DistY*DistY) <= (Size * Size) ) 
-//		  if(DistX2 < 120 & DistX2 >= 0 & DistY2 < 180 & DistY2 >= 0)
-//            ball_on2 = 1'b1;
-//        else 
-//            ball_on2 = 1'b0;
-//     end 
        
     always_comb
     begin:RGB_Display
@@ -103,6 +96,12 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 				Red = 4'h0;
 				Green = 4'hf;
 				Blue = 4'h0;
+		  end
+		  else if ((ko_on == 1'b1) && (death == 1'b1))
+		  begin
+				Red = ko_red;
+				Green = ko_green;
+				Blue = ko_blue;
 		  end
 		  else if ((ryu_on == 1'b1))
 		  begin
