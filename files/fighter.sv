@@ -74,6 +74,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [3:0] RyuIndex, AkumaIndex;
 	logic Akumahit, Ryuhit, Akumapunch, Ryupunch, RyuJump, AkumaJump, RyuCrouch, AkumaCrouch, Ryublock, Akumablock;
 	logic RyuLeft, RyuRight, AkumaLeft, AkumaRight;
+	logic RyuDeath, AkumaDeath;
+	logic GameOver;
 	int AkumaKB, RyuKB;
 	int XDist;
 
@@ -120,6 +122,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign {Reset_h}=~ (KEY[0]);
 	
 	assign XDist = twoxsig - onexsig;
+	
+	assign GamePlaying = ~(AkumaDeath || RyuDeath);
 
 	//Our A/D converter is only 12 bit
 //	assign VGA_R = Red[3:0];
@@ -186,7 +190,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.Reset(Reset_h),
 		.hit(Ryuhit),
 		.block(Ryublock),
-		.health(ryu_hbar)
+		.other_death(AkumaDeath),
+		.health(ryu_hbar),
+		.death(RyuDeath)
 	);
 	
 	health_bar akuma_health (
@@ -194,7 +200,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.Reset(Reset_h),
 		.hit(Akumahit),
 		.block(Akumablock),
-		.health(akuma_hbar)
+		.other_death(RyuDeath),
+		.health(akuma_hbar),
+		.death(AkumaDeath)
 	);
 
 	ryu ryu_movement(
@@ -204,6 +212,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.keycode_1(keycode_1),
 		.keycode_2(keycode_2),
 		.keycode_3(keycode_3),
+		.GamePlaying(GamePlaying),
 		.XDist(XDist),
 		.Ryu_Knockback(RyuKB),
 		.RyuX(onexsig),
@@ -221,6 +230,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.keycode_1(keycode_1),
 		.keycode_2(keycode_2),
 		.keycode_3(keycode_3),
+		.GamePlaying(GamePlaying),
 		.XDist(XDist),
 		.Akuma_Knockback(AkumaKB),
 		.AkumaX(twoxsig),
@@ -280,7 +290,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.crouch(RyuCrouch),
 		.left(RyuLeft),
 		.right(RyuRight),
-		.death(1'b0),
+		.death(RyuDeath),
 		.spriteIndex(RyuIndex)
 	);
 		
@@ -290,7 +300,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.crouch(AkumaCrouch),
 		.left(AkumaLeft),
 		.right(AkumaRight),
-		.death(1'b0),
+		.death(AkumaDeath),
 		.spriteIndex(AkumaIndex)
 	);	
 

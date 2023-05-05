@@ -25,6 +25,8 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2, RyuLeft,
 			PunchInP2 <= 1'b0;
 			hitP1 <= 1'b0;
 			hitP2 <= 1'b0;
+			blockP1 <= 1'b0;
+			blockP2 <= 1'b0;
 			
 			if((keycode_0 == 8'h06) || (keycode_1 == 8'h06) || (keycode_2 == 8'h06) || (keycode_3 == 8'h06) && ~crouchP1)
 				begin

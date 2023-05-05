@@ -1,5 +1,6 @@
 module  akuma ( input Reset, frame_clk,
 					input [7:0] keycode_0, keycode_1, keycode_2, keycode_3,
+					input logic GamePlaying,
 					input int XDist, Akuma_Knockback,
                output logic [9:0]  AkumaX, AkumaY,
 					output logic AkumaJump, AkumaCrouch, AkumaLeft, AkumaRight);
@@ -26,7 +27,7 @@ module  akuma ( input Reset, frame_clk,
 				Akuma_Y_Pos <= Akuma_Y_Center;
 				Akuma_X_Pos <= Akuma_X_Center;
         end
-		  else
+		  else if (GamePlaying)
 				begin
 				Akuma_X_Motion <= 0;
 				JumpP2 <= 0;
