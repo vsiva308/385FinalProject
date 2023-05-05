@@ -1,5 +1,6 @@
 module Jcontrol (input clk, Jump, Reset,
-					output[9:0] Ball_Y_Motion);
+					output[9:0] Ball_Y_Motion,
+					output logic Jmp);
 					
 	enum logic [7:0] {Rest, A, A1, B, B1, C, C1, D, D1, E, E1, F, F1, G, G1, H, H1, I, I1, J, J1, K, K1, L, L1, M, M1, N, N1, O, O1, P, Q, R, S, T, U} curr_jstate, next_jstate;
 	
@@ -22,6 +23,7 @@ module Jcontrol (input clk, Jump, Reset,
 	always_comb
 	begin
 		next_jstate = curr_jstate;
+		Jmp = 1'b1;
 	
 	
 		unique case(curr_jstate)
@@ -67,7 +69,11 @@ module Jcontrol (input clk, Jump, Reset,
 		endcase
 		
 		case(curr_jstate)
-			Rest: Ball_Y_Motion = 0;
+			Rest: 
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
 			A: Ball_Y_Motion = -8;
 			A1: Ball_Y_Motion = -8;
 			B:	Ball_Y_Motion = -6;

@@ -17,8 +17,8 @@ module ryu_sprite (
 	//=======================================================
 	//  Ryu Logic
 	//=======================================================
-	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue;
-	logic stand_on, punch_on;
+	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue;
+	logic stand_on, punch_on, jump_on;
 
 	ryu_standing_sprite standing(
 		.vga_clk(vga_clk),
@@ -45,6 +45,19 @@ module ryu_sprite (
 		.blue(punch_blue),
 		.ryu_on(punch_on)
 	);
+	
+	ryu_jump_sprite jumping(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.RyuX(RyuX),
+		.RyuY(RyuY),
+		.blank(blank),
+		.red(jump_red),
+		.green(jump_green),
+		.blue(jump_blue),
+		.ryu_on(jump_on)
+	);
 
 	//=======================================================
 	//  Ryu Select Logic
@@ -70,6 +83,13 @@ module ryu_sprite (
 				green = punch_green;
 				blue = punch_blue;
 				ryu_on = punch_on;
+			end
+			3'b010:
+			begin
+				red = jump_red;
+				green = jump_green;
+				blue = jump_blue;
+				ryu_on = jump_on;
 			end
 			default: ;
 		endcase

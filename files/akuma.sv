@@ -1,7 +1,8 @@
 module  akuma ( input Reset, frame_clk,
 					input [7:0] keycode_0, keycode_1, keycode_2, keycode_3,
 					input int XDist, Akuma_Knockback,
-               output [9:0]  AkumaX, AkumaY);
+               output logic [9:0]  AkumaX, AkumaY,
+					output logic AkumaJump);
 			
 	 int Akuma_X_Pos, Akuma_Y_Pos;
 	 int Akuma_X_Motion, Akuma_Y_Motion;
@@ -61,7 +62,8 @@ module  akuma ( input Reset, frame_clk,
 		.Reset(Reset),
 		.clk(frame_clk),
 		.Jump(JumpP2),
-		.Ball_Y_Motion(Akuma_Y_Motion)
+		.Ball_Y_Motion(Akuma_Y_Motion),
+		.Jmp(AkumaJump)
 		);
 		
 endmodule 

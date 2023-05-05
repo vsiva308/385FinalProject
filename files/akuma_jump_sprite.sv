@@ -1,4 +1,4 @@
-module akuma_standing_sprite (
+module akuma_jump_sprite (
 	input logic vga_clk,
 	input logic [9:0] DrawX, DrawY, AkumaX, AkumaY,
 	input logic blank,
@@ -6,7 +6,7 @@ module akuma_standing_sprite (
 	output logic akuma_on
 );
 
-	logic [13:0] rom_address;
+	logic [12:0] rom_address;
 	logic [3:0] rom_q;
 
 	logic [3:0] palette_red, palette_green, palette_blue;
@@ -18,11 +18,10 @@ module akuma_standing_sprite (
 
 	// address into the rom = (x*xDim)/640 + ((y*yDim)/480) * xDim
 	// this will stretch out the sprite across the entire screen
-	//assign rom_address = ((DrawX * 98) / 640) + (((DrawY * 175) / 480) * 98);
-
+	
 	always_comb begin
-		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 140) && (DrawY >= AkumaY) && (DrawY < AkumaY + 239))
-				rom_address = ((((DrawX * 70) / 140) + (((DrawY * 120) / 240) * 70)) - (((AkumaX * 70) / 140) + (((AkumaY * 120) / 240) * 70)));
+		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 140) && (DrawY >= AkumaY) && (DrawY < AkumaY + 161))
+				rom_address = ((((DrawX * 70) / 140) + (((DrawY * 81) / 162) * 70)) - (((AkumaX * 70) / 140) + (((AkumaY * 81) / 162) * 70)));
 		else
 				rom_address = 14'd0;
 	end
@@ -41,13 +40,13 @@ module akuma_standing_sprite (
 		end
 	end
 
-	akuma_rom akuma_rom (
+	akuma_jump_rom akuma_jump_rom (
 		.clock   (negedge_vga_clk),
 		.address (rom_address),
 		.q       (rom_q)
 	);
 
-	akuma_palette akuma_palette (
+	akuma_jump_palette akuma_jump_palette (
 		.index (rom_q),
 		.red   (palette_red),
 		.green (palette_green),

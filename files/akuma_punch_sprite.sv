@@ -24,7 +24,7 @@ module akuma_punch_sprite (
 	// this will stretch out the sprite across the entire screen
 	
 	always_comb begin
-		if ((DrawX >= AkumaXFist) && (DrawX < AkumaXFist + 184) && (DrawY >= AkumaY) && (DrawY < AkumaY + 240))
+		if ((DrawX >= AkumaXFist) && (DrawX < AkumaXFist + 183) && (DrawY >= AkumaY) && (DrawY < AkumaY + 239))
 				rom_address = ((((DrawX * 92) / 184) + (((DrawY * 120) / 240) * 92)) - (((AkumaXFist * 92) / 184) + (((AkumaY * 120) / 240) * 92)));
 		else
 				rom_address = 14'd0;
