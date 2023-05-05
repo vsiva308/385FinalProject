@@ -31,7 +31,7 @@ module KcontrolP2 (input clk, Punch, Reset, crouch,
 						next_jstate = Rest;
 					else if(Punch)
 					begin
-						if(rightWallDist < 9)
+						if(rightWallDist < 8)
 						begin
 							next_jstate = G;
 						end
@@ -83,7 +83,7 @@ module KcontrolP2 (input clk, Punch, Reset, crouch,
 						end
 				end
 			E: begin
-					if(rightWallDist < 4)
+					if(rightWallDist < 5)
 						begin
 							next_jstate = G;
 						end
@@ -99,12 +99,12 @@ module KcontrolP2 (input clk, Punch, Reset, crouch,
 		
 		case(curr_jstate)
 			Rest: Ball_X_Motion = 0;
-			A: Ball_X_Motion = 9;
+			A: Ball_X_Motion = 8;
 			B: Ball_X_Motion = 8;
 			C:	Ball_X_Motion = 7;
 			D: Ball_X_Motion = 6;
 			E: Ball_X_Motion = 5;
-			F: Ball_X_Motion = 4;
+			F: Ball_X_Motion = 5;
 			G: Ball_X_Motion = rightWallDist;
 		endcase
 	end

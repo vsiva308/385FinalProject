@@ -13,8 +13,8 @@ module  ryu ( input Reset, frame_clk,
 	 
 	 int Ryu_Width = 120;
 	 int Ryu_Height = 180;
-	 
-	 parameter [9:0] Bound_X_Min=7;       // Leftmost point on the X axis
+	
+	 parameter [9:0] Bound_X_Min=10;       // Leftmost point on the X axis
 	 
 	 assign RyuX = Ryu_X_Pos;
 	 assign RyuY = Ryu_Y_Pos;
@@ -36,7 +36,7 @@ module  ryu ( input Reset, frame_clk,
 				RyuLeft <= 1'b0;
 				RyuRight <= 1'b0;
 				RyuCrouch <= 1'b0;
-				if ((keycode_0 == 8'h04 || keycode_1 == 8'h04 || keycode_2 == 8'h04 || keycode_3 == 8'h04) && (Ryu_X_Pos > Bound_X_Min))
+				if ((keycode_0 == 8'h04 || keycode_1 == 8'h04 || keycode_2 == 8'h04 || keycode_3 == 8'h04) && (Ryu_X_Pos + 2 > Bound_X_Min))
 					begin
 						Ryu_X_Motion <= -2;//A
 						JumpP1 <= 0;
@@ -59,9 +59,11 @@ module  ryu ( input Reset, frame_clk,
 						JumpP1 <= 1; //W
 					end
 
-			
 				Ryu_Y_Pos <= (Ryu_Y_Pos + Ryu_Y_Motion);  // Update ball position
-				Ryu_X_Pos <= (Ryu_X_Pos + Ryu_X_Motion + Ryu_Knockback);	
+				if(Ryu_X_Pos < Bound_X_Min)
+					Ryu_X_Pos <= Bound_X_Min;
+				else
+					Ryu_X_Pos <= (Ryu_X_Pos + Ryu_X_Motion + Ryu_Knockback);	
 				end
 			end
 	 logic JumpP1 = 1'b0;

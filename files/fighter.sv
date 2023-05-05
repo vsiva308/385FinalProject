@@ -262,7 +262,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.crouchP1(RyuCrouch),
 		.crouchP2(AkumaCrouch),
 		.blockP1(Ryublock),
-		.blockP2(Akumablock)
+		.blockP2(Akumablock),
+		.RyuLeft(RyuLeft)
 	);
 	
 	color_mapper cm(
