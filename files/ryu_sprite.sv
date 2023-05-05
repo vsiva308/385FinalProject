@@ -11,14 +11,15 @@ module ryu_sprite (
 		0 - Standing
 		1 - Punching
 		2 - Jumping
+		3 - Crouching
 	=================================================================
 	*/
 
 	//=======================================================
 	//  Ryu Logic
 	//=======================================================
-	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue;
-	logic stand_on, punch_on, jump_on;
+	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue, crouch_red, crouch_green, crouch_blue;
+	logic stand_on, punch_on, jump_on, crouch_on;
 
 	ryu_standing_sprite standing(
 		.vga_clk(vga_clk),
@@ -58,6 +59,19 @@ module ryu_sprite (
 		.blue(jump_blue),
 		.ryu_on(jump_on)
 	);
+	
+	ryu_crouch_sprite crouching(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.RyuX(RyuX),
+		.RyuY(RyuY),
+		.blank(blank),
+		.red(crouch_red),
+		.green(crouch_green),
+		.blue(crouch_blue),
+		.ryu_on(crouch_on)
+	);
 
 	//=======================================================
 	//  Ryu Select Logic
@@ -90,6 +104,13 @@ module ryu_sprite (
 				green = jump_green;
 				blue = jump_blue;
 				ryu_on = jump_on;
+			end
+			3'b100:
+			begin
+				red = crouch_red;
+				green = crouch_green;
+				blue = crouch_blue;
+				ryu_on = crouch_on;
 			end
 			default: 
 			begin
