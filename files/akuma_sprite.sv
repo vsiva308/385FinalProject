@@ -23,8 +23,8 @@ module akuma_sprite (
 	//  Akuma Logic
 	//=======================================================
 	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue, crouch_red, crouch_green, crouch_blue; 
-	logic [3:0] left_red, left_green, left_blue, right_red, right_green, right_blue, death_red, death_green, death_blue, jatk_red, jatk_green, jatk_blue;
-	logic stand_on, punch_on, jump_on, crouch_on, left_on, right_on, death_on, jatk_on;
+	logic [3:0] left_red, left_green, left_blue, right_red, right_green, right_blue, death_red, death_green, death_blue, jatk_red, jatk_green, jatk_blue, pulse_red, pulse_green, pulse_blue;
+	logic stand_on, punch_on, jump_on, crouch_on, left_on, right_on, death_on, jatk_on, pulse_on;
 
 	akuma_standing_sprite standing(
 		.vga_clk(vga_clk),
@@ -38,6 +38,20 @@ module akuma_sprite (
 		.blue(stand_blue),
 		.akuma_on(stand_on)
 	);
+	
+	akuma_pulse_sprite pulse(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.AkumaX(AkumaX),
+		.AkumaY(AkumaY),
+		.blank(blank),
+		.red(pulse_red),
+		.green(pulse_green),
+		.blue(pulse_blue),
+		.akuma_on(pulse_on)
+	);
+	
 
 	akuma_punch_sprite punching(
 		.vga_clk(vga_clk),
