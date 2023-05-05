@@ -226,6 +226,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.keycode_2(keycode_2),
 		.keycode_3(keycode_3),
 		.XDist(XDist),
+		.P1Ypos(oneysig),
+		.P2Ypos(twoysig),
+		.P1Xpos(onexsig),
+		.P2Xpos(twoxsig),
 		.Ryu_Knockback(RyuKB),
 		.Akuma_Knockback(AkumaKB)
 	);

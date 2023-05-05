@@ -12,7 +12,7 @@ module  ryu ( input Reset, frame_clk,
 	 int Ryu_Width = 120;
 	 int Ryu_Height = 180;
 	 
-	 parameter [9:0] Bound_X_Min=2;       // Leftmost point on the X axis
+	 parameter [9:0] Bound_X_Min=7;       // Leftmost point on the X axis
 	 
 	 assign RyuX = Ryu_X_Pos;
 	 assign RyuY = Ryu_Y_Pos;
