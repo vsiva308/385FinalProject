@@ -71,6 +71,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0] drawxsig, drawysig, onexsig, oneysig, twoxsig, twoysig;
 	logic [7:0] keycode_0, keycode_1, keycode_2, keycode_3;
 	logic [7:0] akuma_hbar, ryu_hbar;
+	logic Akumahit = 1'b0;
+	logic Ryuhit = 1'b0;
 	int AkumaKB, RyuKB;
 	int XDist;
 
@@ -181,14 +183,14 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	health_bar ryu_health (
 		.Clk(VGA_VS),
 		.Reset(Reset_h),
-		.hit(),
+		.hit(Ryuhit),
 		.health(ryu_hbar)
 	);
 	
 	health_bar akuma_health (
 		.Clk(VGA_VS),
 		.Reset(Reset_h),
-		.hit(),
+		.hit(Akumahit),
 		.health(akuma_hbar)
 	);
 
@@ -231,7 +233,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.P1Xpos(onexsig),
 		.P2Xpos(twoxsig),
 		.Ryu_Knockback(RyuKB),
-		.Akuma_Knockback(AkumaKB)
+		.Akuma_Knockback(AkumaKB),
+		.PunchP1(Ryuhit),
+		.PunchP2(Akumahit)
 	);
 	
 	color_mapper cm(

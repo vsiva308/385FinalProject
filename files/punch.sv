@@ -1,6 +1,7 @@
 module punch(input Reset, frame_clk,
 					input [7:0] keycode_0, keycode_1, keycode_2, keycode_3,
 					input int XDist, P1Ypos, P2Ypos, P1Xpos, P2Xpos,
+					output logic PunchP1, PunchP2,
 					output int Ryu_Knockback, Akuma_Knockback
 );
 	 int fistPosP1;
@@ -26,9 +27,6 @@ module punch(input Reset, frame_clk,
 					PunchP1 <= 1'b1;
 				end				
 	 end
-	 
-	 logic PunchP1 = 1'b0;
-	 logic PunchP2 = 1'b0;
 	 
 	 KcontrolP1 KControlP1(
 		.Reset(Reset),

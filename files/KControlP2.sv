@@ -4,7 +4,7 @@ module KcontrolP2 (input clk, Punch, Reset,
 					
 	enum logic [7:0] {Rest, A, A1, B, B1, C, C1, D, D1, E, E1, F, F1, G, G1, H, H1, I, I1, J, J1, K, K1, L, L1, M, M1, N, N1, O, O1, P, Q, R, S, T, U} curr_jstate, next_jstate;
 	
-	parameter [9:0] Bound_X_Max=637;
+	parameter [9:0] Bound_X_Max=638;
 	
 	int rightWallDist;
 	

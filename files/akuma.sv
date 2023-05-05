@@ -8,7 +8,7 @@ module  akuma ( input Reset, frame_clk,
 	 
 	 parameter [9:0] Akuma_X_Center=480;  // Center position on the X axis
 	 parameter [9:0] Akuma_Y_Center=170;  // Topleft position on the Y axis
-	 parameter [9:0] Bound_X_Max=637;     // Rightmost point on the X axis
+	 parameter [9:0] Bound_X_Max=635;     // Rightmost point on the X axis
 	 
 	 int Akuma_Width = 140;
 	 int Akuma_Height = 240;
