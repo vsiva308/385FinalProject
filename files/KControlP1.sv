@@ -29,7 +29,7 @@ module KcontrolP1 (input clk, Punch, Reset,
 				begin
 					if(Punch)
 					begin
-						if(leftWallDist < 7)
+						if(leftWallDist < 9)
 						begin
 							next_jstate = G;
 						end
@@ -41,7 +41,7 @@ module KcontrolP1 (input clk, Punch, Reset,
 				end
 				
 			A: begin
-					if(leftWallDist < 7)
+					if(leftWallDist < 8)
 						begin
 							next_jstate = G;
 						end
@@ -51,7 +51,7 @@ module KcontrolP1 (input clk, Punch, Reset,
 						end
 				end
 			B: begin
-					if(leftWallDist < 5)
+					if(leftWallDist < 7)
 						begin
 							next_jstate = G;
 						end
@@ -61,7 +61,7 @@ module KcontrolP1 (input clk, Punch, Reset,
 						end
 				end
 			C: begin
-					if(leftWallDist < 5)
+					if(leftWallDist < 6)
 						begin
 							next_jstate = G;
 						end
@@ -71,7 +71,7 @@ module KcontrolP1 (input clk, Punch, Reset,
 						end
 				end
 			D: begin
-					if(leftWallDist < 3)
+					if(leftWallDist < 5)
 						begin
 							next_jstate = G;
 						end
@@ -81,7 +81,7 @@ module KcontrolP1 (input clk, Punch, Reset,
 						end
 				end
 			E: begin
-					if(leftWallDist < 3)
+					if(leftWallDist < 4)
 						begin
 							next_jstate = G;
 						end

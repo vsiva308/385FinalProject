@@ -7,6 +7,12 @@ module punch(input Reset, frame_clk,
 	 int fistPosP1;
 	 int fistPosP2;
 
+	 logic PunchInP1, PunchOutP1;
+	 logic PunchInP2, PunchOutP2;
+	 
+	 parameter[7:0] keycode_punchP1 = 8'h06;
+	 parameter[7:0] keycode_punchP2 = 8'h11;
+	 
 	 always_comb
 	 begin
 		fistPosP1 = P1Ypos + 30;
@@ -15,28 +21,39 @@ module punch(input Reset, frame_clk,
 	
 	 always_ff @ (posedge frame_clk)
 	 begin: Knockback_Engine 
-			PunchP1 <= 1'b0;
-			PunchP2 <= 1'b0;
+			PunchInP1 <= 1'b0;
+			PunchInP2 <= 1'b0;
 			hitP1 <= 1'b0;
 			hitP2 <= 1'b0;
 			
 			if((keycode_0 == 8'h06) || (keycode_1 == 8'h06) || (keycode_2 == 8'h06) || (keycode_3 == 8'h06))
 				begin
-					PunchP1 <= 1'b1;
-					if((XDist < 135) && (fistPosP1 > P2Ypos))
-						begin
-							hitP2 <= 1'b1;
-						end
+					PunchInP1 <= 1'b1;
+					//if((XDist < 135) && (fistPosP1 > P2Ypos) && )
+						//begin
+							//hitP2 <= 1'b1;
+						//end
+				end
+			
+			if((XDist < 135) && (fistPosP1 > P2Ypos) && PunchP1)
+				begin
+					hitP2 <= 1'b1;
 				end
 				
 			if((keycode_0 == 8'h11) || (keycode_1 == 8'h11) || (keycode_2 == 8'h11) || (keycode_3 == 8'h11))
 				begin
-					PunchP2 <= 1'b1;
-					if((XDist < 135) && (fistPosP2 > P1Ypos))
-						begin
-							hitP1 <= 1'b1;
-						end
-				end				
+					PunchInP2 <= 1'b1;
+					//if((XDist < 135) && (fistPosP2 > P1Ypos))
+						//begin
+							//hitP1 <= 1'b1;
+						//end
+				end
+
+			if((XDist < 135) && (fistPosP2 > P1Ypos) && PunchP2)
+				begin
+						hitP1 <= 1'b1;
+				end
+						
 	 end
 	 
 	 KcontrolP1 KControlP1(
@@ -54,5 +71,34 @@ module punch(input Reset, frame_clk,
 		.Xpos(P2Xpos),
 		.Ball_X_Motion(Akuma_Knockback)
 		);
+	
+	assign PunchP1 = PunchOutP1;
+	assign PunchP2 = PunchOutP2;
+	
+	 PunchControl PunchControlP1(
+		.Reset(Reset),
+		.clk(frame_clk),
+		.PunchIn(PunchInP1),
+		.keycode_punch(keycode_punchP1),
+		.keycode_0(keycode_0),
+		.keycode_1(keycode_1),
+		.keycode_2(keycode_2),
+		.keycode_3(keycode_3),
+		.PunchOut(PunchOutP1),
+		.hit(hitP1)
+	 );
+	 
+	 PunchControl PunchControlP2(
+		.Reset(Reset),
+		.clk(frame_clk),
+		.PunchIn(PunchInP2),
+		.keycode_punch(keycode_punchP2),
+		.keycode_0(keycode_0),
+		.keycode_1(keycode_1),
+		.keycode_2(keycode_2),
+		.keycode_3(keycode_3),
+		.PunchOut(PunchOutP2),
+		.hit(hitP2)
+	 );
 		
 endmodule 
