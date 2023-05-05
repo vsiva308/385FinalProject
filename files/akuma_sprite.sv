@@ -12,14 +12,17 @@ module akuma_sprite (
 		1 - Punching
 		2 - Jumping
 		3 - Crouching
+		4 - Walk Left
+		5 - Walk Right
 	=================================================================
 	*/
 
 	//=======================================================
 	//  Akuma Logic
 	//=======================================================
-	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue, crouch_red, crouch_green, crouch_blue, left_red, left_green, left_blue;
-	logic stand_on, punch_on, jump_on, crouch_on, left_on;
+	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue, crouch_red, crouch_green, crouch_blue; 
+	logic [3:0] left_red, left_green, left_blue, right_red, right_green, right_blue;
+	logic stand_on, punch_on, jump_on, crouch_on, left_on, right_on;
 
 	akuma_standing_sprite standing(
 		.vga_clk(vga_clk),
@@ -85,6 +88,19 @@ module akuma_sprite (
 		.blue(left_blue),
 		.akuma_on(left_on)
 	);
+	
+	akuma_right_sprite right(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.AkumaX(AkumaX),
+		.AkumaY(AkumaY),
+		.blank(blank),
+		.red(right_red),
+		.green(right_green),
+		.blue(right_blue),
+		.akuma_on(right_on)
+	);
 
 	//=======================================================
 	//  Akuma Select Logic
@@ -131,6 +147,13 @@ module akuma_sprite (
 				green = left_green;
 				blue = left_blue;
 				akuma_on = left_on;
+			end
+			3'b101:
+			begin
+				red = right_red;
+				green = right_green;
+				blue = right_blue;
+				akuma_on = right_on;
 			end
 			default: 
 			begin
