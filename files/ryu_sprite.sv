@@ -20,7 +20,7 @@ module ryu_sprite (
 	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue;
 	logic stand_on, punch_on;
 
-	ryu_standing_sprite(
+	ryu_standing_sprite standing(
 		.vga_clk(vga_clk),
 		.DrawX(DrawX),
 		.DrawY(DrawY),
@@ -33,7 +33,7 @@ module ryu_sprite (
 		.ryu_on(stand_on)
 	);
 
-	ryu_punch_sprite(
+	ryu_punch_sprite punching(
 		.vga_clk(vga_clk),
 		.DrawX(DrawX),
 		.DrawY(DrawY),

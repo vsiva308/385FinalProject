@@ -58,6 +58,7 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 		.DrawY(DrawY),
 		.AkumaX(AkumaX),
 		.AkumaY(AkumaY),
+		.sprite(3'b000), //change this index
 		.blank(blank),
 		.red(akuma_red),
 		.green(akuma_green),

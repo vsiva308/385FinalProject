@@ -1,57 +1,78 @@
 module akuma_sprite (
 	input logic vga_clk,
 	input logic [9:0] DrawX, DrawY, AkumaX, AkumaY,
+	input logic [2:0] sprite,
 	input logic blank,
 	output logic [3:0] red, green, blue,
 	output logic akuma_on
 );
+/*
+	==========================Dictionary=============================
+		0 - Standing
+		1 - Punching
+		2 - Jumping
+	=================================================================
+	*/
 
-logic [13:0] rom_address;
-logic [3:0] rom_q;
+	//=======================================================
+	//  Akuma Logic
+	//=======================================================
+	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue;
+	logic stand_on, punch_on;
 
-logic [3:0] palette_red, palette_green, palette_blue;
+	akuma_standing_sprite standing(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.AkumaX(AkumaX),
+		.AkumaY(AkumaY),
+		.blank(blank),
+		.red(stand_red),
+		.green(stand_green),
+		.blue(stand_blue),
+		.akuma_on(stand_on)
+	);
 
-logic negedge_vga_clk;
+	akuma_punch_sprite punching(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.AkumaX(AkumaX),
+		.AkumaY(AkumaY),
+		.blank(blank),
+		.red(punch_red),
+		.green(punch_green),
+		.blue(punch_blue),
+		.akuma_on(punch_on)
+	);
 
-// read from ROM on negedge, set pixel on posedge
-assign negedge_vga_clk = ~vga_clk;
-
-// address into the rom = (x*xDim)/640 + ((y*yDim)/480) * xDim
-// this will stretch out the sprite across the entire screen
-//assign rom_address = ((DrawX * 98) / 640) + (((DrawY * 175) / 480) * 98);
-
-always_comb begin
-	if ((DrawX >= AkumaX) && (DrawX < AkumaX + 140) && (DrawY >= AkumaY) && (DrawY < AkumaY + 240))
-			rom_address = ((((DrawX * 70) / 140) + (((DrawY * 120) / 240) * 70)) - (((AkumaX * 70) / 140) + (((AkumaY * 120) / 240) * 70)));
-	else
-			rom_address = 14'd0;
-end
-
-always_ff @ (posedge vga_clk) begin
-	red <= 4'h0;
-	green <= 4'h0;
-	blue <= 4'h0;
-	akuma_on <= 1'b0;
-
-	if (blank && ~((palette_blue == 4'hf) && (palette_red == 4'hf) && (palette_green == 4'h0))) begin
-		red <= palette_red;
-		green <= palette_green;
-		blue <= palette_blue;
-		akuma_on <= 1'b1;
+	//=======================================================
+	//  Akuma Select Logic
+	//=======================================================
+	always_comb
+	begin
+		red = 4'h0;
+		green = 4'h0;
+		blue = 4'h0;
+		akuma_on = 1'b0;
+		
+		case(sprite)
+			3'b000:
+			begin
+				red = stand_red;
+				green = stand_green;
+				blue = stand_blue;
+				akuma_on = stand_on;
+			end
+			3'b001:
+			begin
+				red = punch_red;
+				green = punch_green;
+				blue = punch_blue;
+				akuma_on = punch_on;
+			end
+			default: ;
+		endcase
 	end
-end
-
-akuma_rom akuma_rom (
-	.clock   (negedge_vga_clk),
-	.address (rom_address),
-	.q       (rom_q)
-);
-
-akuma_palette akuma_palette (
-	.index (rom_q),
-	.red   (palette_red),
-	.green (palette_green),
-	.blue  (palette_blue)
-);
 
 endmodule
