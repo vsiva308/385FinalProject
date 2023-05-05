@@ -18,7 +18,7 @@ module akuma_death_sprite (
 	
 	int AkumaYOffset;
 	
-	assign AkumaYOffset = AkumaY + 140;
+	assign AkumaYOffset = 215 + 140;
 
 	// address into the rom = (x*xDim)/640 + ((y*yDim)/480) * xDim
 	// this will stretch out the sprite across the entire screen

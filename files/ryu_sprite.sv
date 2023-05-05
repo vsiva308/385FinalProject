@@ -15,6 +15,7 @@ module ryu_sprite (
 		4 - Walk Left
 		5 - Walk Right
 		6 - Death
+		7 - Jumping Attack
 	=================================================================
 	*/
 
@@ -22,8 +23,8 @@ module ryu_sprite (
 	//  Ryu Logic
 	//=======================================================
 	logic [3:0] stand_red, stand_green, stand_blue, punch_red, punch_green, punch_blue, jump_red, jump_green, jump_blue, crouch_red, crouch_green, crouch_blue;
-	logic [3:0] left_red, left_green, left_blue, right_red, right_green, right_blue, death_red, death_green, death_blue;
-	logic stand_on, punch_on, jump_on, crouch_on, left_on, right_on, death_on;
+	logic [3:0] left_red, left_green, left_blue, right_red, right_green, right_blue, death_red, death_green, death_blue, jatk_red, jatk_green, jatk_blue;
+	logic stand_on, punch_on, jump_on, crouch_on, left_on, right_on, death_on, jatk_on;
 
 	ryu_standing_sprite standing(
 		.vga_clk(vga_clk),
@@ -115,6 +116,19 @@ module ryu_sprite (
 		.blue(death_blue),
 		.ryu_on(death_on)
 	);
+	
+	ryu_jump_atk_sprite jatk(
+		.vga_clk(vga_clk),
+		.DrawX(DrawX),
+		.DrawY(DrawY),
+		.RyuX(RyuX),
+		.RyuY(RyuY),
+		.blank(blank),
+		.red(jatk_red),
+		.green(jatk_green),
+		.blue(jatk_blue),
+		.ryu_on(jatk_on)
+	);
 
 	//=======================================================
 	//  Ryu Select Logic
@@ -175,6 +189,13 @@ module ryu_sprite (
 				green = death_green;
 				blue = death_blue;
 				ryu_on = death_on;
+			end
+			3'b111:
+			begin
+				red = jatk_red;
+				green = jatk_green;
+				blue = jatk_blue;
+				ryu_on = jatk_on;
 			end
 			default: 
 			begin

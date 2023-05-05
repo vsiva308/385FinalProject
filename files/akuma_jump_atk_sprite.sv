@@ -1,9 +1,9 @@
-module ryu_jump_sprite (
+module akuma_jump_atk_sprite (
 	input logic vga_clk,
-	input logic [9:0] DrawX, DrawY, RyuX, RyuY,
+	input logic [9:0] DrawX, DrawY, AkumaX, AkumaY,
 	input logic blank,
 	output logic [3:0] red, green, blue,
-	output logic ryu_on
+	output logic akuma_on
 );
 
 	logic [12:0] rom_address;
@@ -20,8 +20,8 @@ module ryu_jump_sprite (
 	// this will stretch out the sprite across the entire screen
 	
 	always_comb begin
-		if ((DrawX >= RyuX) && (DrawX < RyuX + 107) && (DrawY >= RyuY) && (DrawY < RyuY + 153))
-				rom_address = ((((DrawX * 54) / 108) + (((DrawY * 77) / 154) * 54)) - (((RyuX * 54) / 108) + (((RyuY * 77) / 154) * 54)));
+		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 133) && (DrawY >= AkumaY) && (DrawY < AkumaY + 163))
+				rom_address = ((((DrawX * 67) / 134) + (((DrawY * 82) / 164) * 67)) - (((AkumaX * 67) / 134) + (((AkumaY * 82) / 164) * 67)));
 		else
 				rom_address = 13'd0;
 	end
@@ -30,23 +30,23 @@ module ryu_jump_sprite (
 		red <= 4'h0;
 		green <= 4'h0;
 		blue <= 4'h0;
-		ryu_on <= 1'b0;
+		akuma_on <= 1'b0;
 
 		if (blank && ~((palette_blue == 4'hf) && (palette_red == 4'hf) && (palette_green == 4'h0))) begin
 			red <= palette_red;
 			green <= palette_green;
 			blue <= palette_blue;
-			ryu_on <= 1'b1;
+			akuma_on <= 1'b1;
 		end
 	end
 
-	ryu_jump_rom ryu_jump_rom (
+	akuma_jump_atk_rom akuma_jump_atk_rom (
 		.clock   (negedge_vga_clk),
 		.address (rom_address),
 		.q       (rom_q)
 	);
 
-	ryu_jump_palette ryu_jump_palette (
+	akuma_jump_atk_palette akuma_jump_atk_palette (
 		.index (rom_q),
 		.red   (palette_red),
 		.green (palette_green),

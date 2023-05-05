@@ -23,7 +23,7 @@ module akuma_jump_sprite (
 		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 139) && (DrawY >= AkumaY) && (DrawY < AkumaY + 161))
 				rom_address = ((((DrawX * 70) / 140) + (((DrawY * 81) / 162) * 70)) - (((AkumaX * 70) / 140) + (((AkumaY * 81) / 162) * 70)));
 		else
-				rom_address = 14'd0;
+				rom_address = 13'd0;
 	end
 
 	always_ff @ (posedge vga_clk) begin
