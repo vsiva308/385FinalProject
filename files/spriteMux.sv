@@ -23,7 +23,7 @@ module spriteMux(
 			6'b001001: spriteIndex = 3'b001; //left + punch
 			6'b001010: spriteIndex = 3'b010; //left + jump
 			6'b001011: spriteIndex = 3'b001; //left + jump + punch
-			6'b010000: spriteIndex = 3'b110; //right only
+			6'b010000: spriteIndex = 3'b101; //right only
 			6'b010001: spriteIndex = 3'b001; //right + punch
 			6'b010010: spriteIndex = 3'b010; //right + jump
 			6'b010011: spriteIndex = 3'b001; //right + jump + punch
