@@ -104,13 +104,41 @@ module Jcontrol (input clk, Jump, Reset,
 			N1: Ball_Y_Motion = 6;
 			O: Ball_Y_Motion = 8;
 			O1: Ball_Y_Motion = 8;
-			P: Ball_Y_Motion = 0;
-			Q: Ball_Y_Motion = 0;
-			R: Ball_Y_Motion = 0;
-			S: Ball_Y_Motion = 0;
-			T: Ball_Y_Motion = 0;
-			U: Ball_Y_Motion = 0;
-			default: Ball_Y_Motion = 0;
+			P:
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
+			Q:
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
+			R:
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
+			S:
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
+			T:
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
+			U:
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
+			default:
+			begin
+				Ball_Y_Motion = 0;
+				Jmp = 1'b0;
+			end
 		endcase
 	end
 endmodule
