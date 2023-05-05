@@ -72,7 +72,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [7:0] keycode_0, keycode_1, keycode_2, keycode_3;
 	logic [7:0] akuma_hbar, ryu_hbar;
 	logic [3:0] RyuIndex, AkumaIndex;
-	logic Akumahit, Ryuhit, Akumapunch, Ryupunch, RyuJump, AkumaJump, RyuCrouch, AkumaCrouch;
+	logic Akumahit, Ryuhit, Akumapunch, Ryupunch, RyuJump, AkumaJump, RyuCrouch, AkumaCrouch, Ryublock, Akumablock;
 	logic RyuLeft, RyuRight, AkumaLeft, AkumaRight;
 	int AkumaKB, RyuKB;
 	int XDist;
@@ -185,6 +185,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.Clk(VGA_VS),
 		.Reset(Reset_h),
 		.hit(Ryuhit),
+		.block(Ryublock),
 		.health(ryu_hbar)
 	);
 	
@@ -192,6 +193,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.Clk(VGA_VS),
 		.Reset(Reset_h),
 		.hit(Akumahit),
+		.block(Akumablock),
 		.health(akuma_hbar)
 	);
 
@@ -248,7 +250,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.hitP1(Ryuhit),
 		.hitP2(Akumahit),
 		.crouchP1(RyuCrouch),
-		.crouchP2(AkumaCrouch)
+		.crouchP2(AkumaCrouch),
+		.blockP1(Ryublock),
+		.blockP2(Akumablock)
 	);
 	
 	color_mapper cm(

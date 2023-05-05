@@ -1,7 +1,7 @@
 module punch(input Reset, frame_clk, crouchP1, crouchP2,
 					input [7:0] keycode_0, keycode_1, keycode_2, keycode_3,
 					input int XDist, P1Ypos, P2Ypos, P1Xpos, P2Xpos,
-					output logic hitP1, hitP2, PunchP1, PunchP2,
+					output logic hitP1, hitP2, PunchP1, PunchP2, blockP1, blockP2,
 					output int Ryu_Knockback, Akuma_Knockback
 );
 	 int fistPosP1;
@@ -35,9 +35,12 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2,
 						//end
 				end
 			
-			if((XDist < 135) && (fistPosP1 > P2Ypos) && PunchP1 && !crouchP2)
+			if((XDist < 135) && (fistPosP1 > P2Ypos) && PunchP1)
 				begin
-					hitP2 <= 1'b1;
+					if(crouchP2)
+						blockP2 <= 1'b1;
+					else
+						hitP2 <= 1'b1;
 				end
 				
 			if((keycode_0 == 8'h11) || (keycode_1 == 8'h11) || (keycode_2 == 8'h11) || (keycode_3 == 8'h11))
@@ -49,8 +52,11 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2,
 						//end
 				end
 
-			if((XDist < 135) && (fistPosP2 > P1Ypos) && PunchP2 && !crouchP1)
+			if((XDist < 135) && (fistPosP2 > P1Ypos) && PunchP2)
 				begin
+					if(crouchP1)
+						blockP1 <= 1'b1;
+					else
 						hitP1 <= 1'b1;
 				end
 						
