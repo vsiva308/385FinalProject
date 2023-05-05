@@ -28,8 +28,8 @@ module health_bar (
 						death <= 1'b1;
 					end
 				2'b10: 
-					if (hbar >= 4)
-						hbar <= hbar - 5;
+					if (hbar >= 2)
+						hbar <= hbar - 2;
 					else begin
 						hbar <= 8'd0;
 						death <= 1'b1;

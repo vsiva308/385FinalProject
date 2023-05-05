@@ -17,7 +17,7 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 							  input logic [7:0] RyuHealth, AkumaHealth,
 							  input logic blank,
 							  input logic vga_clk, death,
-							  input logic [2:0] RyuIndex, AkumaIndex,
+							  input logic [3:0] RyuIndex, AkumaIndex,
                        output logic [3:0]  Red, Green, Blue );
 							  
 	 logic ryu_on;

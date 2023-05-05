@@ -1,10 +1,10 @@
-module KcontrolP2 (input clk, Punch, Reset, crouch,
+module KcontrolP2 (input clk, Punch, Reset, block,
 					input int Xpos,
 					output int Ball_X_Motion);
 					
 	enum logic [7:0] {Rest, A, A1, B, B1, C, C1, D, D1, E, E1, F, F1, G, G1, H, H1, I, I1, J, J1, K, K1, L, L1, M, M1, N, N1, O, O1, P, Q, R, S, T, U} curr_jstate, next_jstate;
 	
-	parameter [9:0] Bound_X_Max=638;
+	parameter [9:0] Bound_X_Max=629;
 	
 	int rightWallDist;
 	
@@ -27,8 +27,8 @@ module KcontrolP2 (input clk, Punch, Reset, crouch,
 		unique case(curr_jstate)
 			Rest: 
 				begin
-					if(crouch)
-						next_jstate = Rest;
+					if(block)
+						next_jstate = H;
 					else if(Punch)
 					begin
 						if(rightWallDist < 8)
@@ -94,6 +94,7 @@ module KcontrolP2 (input clk, Punch, Reset, crouch,
 				end
 			F: next_jstate = Rest;
 			G: next_jstate = Rest;
+			H: next_jstate = Rest;
 			
 		endcase
 		
@@ -106,6 +107,7 @@ module KcontrolP2 (input clk, Punch, Reset, crouch,
 			E: Ball_X_Motion = 5;
 			F: Ball_X_Motion = 5;
 			G: Ball_X_Motion = rightWallDist;
+			H: Ball_X_Motion = 4;
 		endcase
 	end
 endmodule

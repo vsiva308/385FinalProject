@@ -44,7 +44,11 @@ module PunchControl (input clk, PunchIn, Reset, hit,
 			J: next_jstate = K;
 			K: next_jstate = L;
 			L: next_jstate = M;
-			M: begin
+			M: next_jstate = N;
+			N: next_jstate = O;
+			O: next_jstate = P;
+			P: next_jstate = Q;
+			Q: begin
 					if((keycode_0 == keycode_punch) || (keycode_1 == keycode_punch) || (keycode_2 == keycode_punch) || (keycode_3 == keycode_punch))
 						begin
 							next_jstate = M;
@@ -54,22 +58,6 @@ module PunchControl (input clk, PunchIn, Reset, hit,
 							next_jstate = Rest;
 						end
 				end
-			//K: next_jstate = L;
-			//L: begin
-					//if((keycode_0 == keycode_punch) || (keycode_1 == keycode_punch) || (keycode_2 == keycode_punch) || (keycode_3 == keycode_punch))
-						//begin
-							//next_jstate = K;
-						//end
-					//else
-						//begin
-							//next_jstate = Rest;
-						//end
-				//end
-			//M: next_jstate = M;
-			//N: next_jstate = N;
-			//O: next_jstate = O;
-			//P: next_jstate = Q;
-			//Q: next_jstate = R;
 			//R: next_jstate = S;
 			//S: next_jstate = T;
 			//T: next_jstate = U;
@@ -84,17 +72,17 @@ module PunchControl (input clk, PunchIn, Reset, hit,
 			D: PunchOut = 1'b1;
 			E: PunchOut = 1'b1;
 			F: PunchOut = 1'b1;
-			G: PunchOut = 1'b0;
+			G: PunchOut = 1'b1;
 			H: PunchOut = 1'b0;
 			I: PunchOut = 1'b0;
 			J: PunchOut = 1'b0;
 			K: PunchOut = 1'b0;
 			L: PunchOut = 1'b0;
 			M: PunchOut = 1'b0;
-			//N: Ball_Y_Motion = 6;
-			//O: Ball_Y_Motion = 8;
-			//P: Ball_Y_Motion = 0;
-			//Q: Ball_Y_Motion = 0;
+			N: PunchOut = 1'b0;
+			O: PunchOut = 1'b0;
+			P: PunchOut = 1'b0;
+			Q: PunchOut = 1'b0;
 			//R: Ball_Y_Motion = 0;
 			//S: Ball_Y_Motion = 0;
 			//T: Ball_Y_Motion = 0;

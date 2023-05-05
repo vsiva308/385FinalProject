@@ -19,9 +19,12 @@ module akuma_jump_atk_sprite (
 	// address into the rom = (x*xDim)/640 + ((y*yDim)/480) * xDim
 	// this will stretch out the sprite across the entire screen
 	
+	int AkumaXshift;
+	assign AkumaXshift = AkumaX-15;
+	
 	always_comb begin
-		if ((DrawX >= AkumaX) && (DrawX < AkumaX + 133) && (DrawY >= AkumaY) && (DrawY < AkumaY + 163))
-				rom_address = ((((DrawX * 67) / 134) + (((DrawY * 82) / 164) * 67)) - (((AkumaX * 67) / 134) + (((AkumaY * 82) / 164) * 67)));
+		if ((DrawX >= AkumaXshift) && (DrawX < AkumaXshift + 133) && (DrawY >= AkumaY) && (DrawY < AkumaY + 163))
+				rom_address = ((((DrawX * 67) / 134) + (((DrawY * 82) / 164) * 67)) - (((AkumaXshift * 67) / 134) + (((AkumaY * 82) / 164) * 67)));
 		else
 				rom_address = 13'd0;
 	end

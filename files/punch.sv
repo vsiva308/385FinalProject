@@ -1,4 +1,4 @@
-module punch(input Reset, frame_clk, crouchP1, crouchP2, RyuLeft,
+module punch(input Reset, frame_clk, crouchP1, crouchP2, jumpP1, jumpP2,
 					input [7:0] keycode_0, keycode_1, keycode_2, keycode_3,
 					input int XDist, P1Ypos, P2Ypos, P1Xpos, P2Xpos,
 					output logic hitP1, hitP2, PunchP1, PunchP2, blockP1, blockP2,
@@ -15,8 +15,15 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2, RyuLeft,
 	 
 	 always_comb
 	 begin
-		fistPosP1 = P1Ypos + 30;
-		fistPosP2 = P2Ypos + 60;
+		if(jumpP1)
+			fistPosP1 = P1Ypos + 40;
+		else
+			fistPosP1 = P1Ypos + 30;
+
+		if(jumpP2)
+			fistPosP2 = P2Ypos + 105;
+		else
+			fistPosP2 = P2Ypos + 60;
 	 end
 	
 	 always_ff @ (posedge frame_clk)
@@ -28,12 +35,12 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2, RyuLeft,
 			blockP1 <= 1'b0;
 			blockP2 <= 1'b0;
 			
-			if((keycode_0 == 8'h06) || (keycode_1 == 8'h06) || (keycode_2 == 8'h06) || (keycode_3 == 8'h06) && ~crouchP1)
+			if(((keycode_0 == 8'h06) || (keycode_1 == 8'h06) || (keycode_2 == 8'h06) || (keycode_3 == 8'h06)) && ((keycode_0 != 8'h16) || (keycode_1 != 8'h16) || (keycode_2 != 8'h16) || (keycode_3 != 8'h16)))
 				begin
 					PunchInP1 <= 1'b1;
 				end
 			
-			if((XDist < 135) && (fistPosP1 > P2Ypos) && PunchP1)
+			if((XDist < 135) && (fistPosP1 > P2Ypos) && PunchP1 && ~crouchP1)
 				begin
 					if(crouchP2)
 						blockP2 <= 1'b1;
@@ -41,12 +48,12 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2, RyuLeft,
 						hitP2 <= 1'b1;
 				end
 				
-			if((keycode_0 == 8'h11) || (keycode_1 == 8'h11) || (keycode_2 == 8'h11) || (keycode_3 == 8'h11) && ~crouchP2)
+			if(((keycode_0 == 8'h11) || (keycode_1 == 8'h11) || (keycode_2 == 8'h11) || (keycode_3 == 8'h11)) && ((keycode_0 != 8'h0e) || (keycode_1 != 8'h0e) || (keycode_2 != 8'h0e) || (keycode_3 != 8'h0e)))
 				begin
 					PunchInP2 <= 1'b1;
 				end
 
-			if((XDist < 135) && (fistPosP2 > P1Ypos) && PunchP2)
+			if((XDist < 135) && (fistPosP2 > P1Ypos) && PunchP2 && ~crouchP2)
 				begin
 					if(crouchP1)
 						blockP1 <= 1'b1;
@@ -62,8 +69,7 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2, RyuLeft,
 		.Punch(hitP1),
 		.Xpos(P1Xpos),
 		.Ball_X_Motion(Ryu_Knockback),
-		.crouch(crouchP1),
-		.RyuLeft(RyuLeft)
+		.block(blockP1)
 		);
 	 
 	 KcontrolP2 KControlP2(
@@ -72,7 +78,7 @@ module punch(input Reset, frame_clk, crouchP1, crouchP2, RyuLeft,
 		.Punch(hitP2),
 		.Xpos(P2Xpos),
 		.Ball_X_Motion(Akuma_Knockback),
-		.crouch(crouchP2)
+		.block(blockP2)
 		);
 	
 	assign PunchP1 = PunchOutP1;
