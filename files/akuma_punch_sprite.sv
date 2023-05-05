@@ -40,13 +40,13 @@ module akuma_punch_sprite (
 		end
 	end
 
-	ryu_punch_rom ryu_punch_rom (
-		.clock   (negedge_vga_clk),
-		.address (rom_address),
-		.q       (rom_q)
+	akuma_punch_rom akuma_punch_rom (
+	.clock   (negedge_vga_clk),
+	.address (rom_address),
+	.q       (rom_q)
 	);
 
-	ryu_punch_palette ryu_punch_palette (
+	akuma_punch_palette akuma_punch_palette (
 		.index (rom_q),
 		.red   (palette_red),
 		.green (palette_green),
