@@ -17,6 +17,7 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 							  input logic [7:0] RyuHealth, AkumaHealth,
 							  input logic blank,
 							  input logic vga_clk,
+							  input logic [2:0] RyuIndex, AkumaIndex,
                        output logic [3:0]  Red, Green, Blue );
 							  
 	 logic ryu_on;
@@ -28,7 +29,7 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 	 
 	 
 	 //drawing background logic -> bg registers -> combinational logic with ball overlap
-	 streetfighter_example bg (
+	streetfighter_example bg (
 		.vga_clk(vga_clk),
 		.DrawX(DrawX), 
 		.DrawY(DrawY),
@@ -44,7 +45,7 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 		.DrawY(DrawY),
 		.RyuX(RyuX),
 		.RyuY(RyuY),
-		.sprite(3'b000), //change this index - look at ryu_sprite.sv
+		.sprite(RyuIndex), //change this index - look at ryu_sprite.sv
 		.blank(blank),
 		.red(ryu_red),
 		.green(ryu_green),
@@ -58,7 +59,7 @@ module  color_mapper ( input        [9:0] RyuX, RyuY, AkumaX, AkumaY, DrawX, Dra
 		.DrawY(DrawY),
 		.AkumaX(AkumaX),
 		.AkumaY(AkumaY),
-		.sprite(3'b001), //change this index
+		.sprite(AkumaIndex), //change this index
 		.blank(blank),
 		.red(akuma_red),
 		.green(akuma_green),

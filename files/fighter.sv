@@ -71,8 +71,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0] drawxsig, drawysig, onexsig, oneysig, twoxsig, twoysig;
 	logic [7:0] keycode_0, keycode_1, keycode_2, keycode_3;
 	logic [7:0] akuma_hbar, ryu_hbar;
-	logic Akumahit = 1'b0;
-	logic Ryuhit = 1'b0;
+	logic [3:0] RyuIndex, AkumaIndex;
+	logic Akumahit, Ryuhit, Akumapunch, Ryupunch;
 	int AkumaKB, RyuKB;
 	int XDist;
 
@@ -234,8 +234,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.P2Xpos(twoxsig),
 		.Ryu_Knockback(RyuKB),
 		.Akuma_Knockback(AkumaKB),
-		.PunchP1(Ryuhit),
-		.PunchP2(Akumahit)
+		.PunchP1(Ryupunch),
+		.PunchP2(Akumapunch),
+		.hitP1(Ryuhit),
+		.hitP2(Akumahit)
 	);
 	
 	color_mapper cm(
@@ -247,11 +249,23 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.DrawY(drawysig),
 		.RyuHealth(ryu_hbar),
 		.AkumaHealth(akuma_hbar),
+		.RyuIndex(RyuIndex),
+		.AkumaIndex(AkumaIndex),
 		.blank(blank),
 		.vga_clk(VGA_Clk),
 		.Red(VGA_R), 
 		.Green(VGA_G), 
 		.Blue(VGA_B)
 		);
+		
+	spriteMux ryuMux(
+		.punch(Ryupunch),
+		.spriteIndex(RyuIndex)
+	);
+		
+	spriteMux akumaMux(
+		.punch(Akumapunch),
+		.spriteIndex(AkumaIndex)
+	);	
 
 endmodule
