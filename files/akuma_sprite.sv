@@ -91,7 +91,13 @@ module akuma_sprite (
 				blue = jump_blue;
 				akuma_on = jump_on;
 			end
-			default: ;
+			default: 
+			begin
+				red = stand_red;
+				green = stand_green;
+				blue = stand_blue;
+				akuma_on = stand_on;
+			end
 		endcase
 	end
 

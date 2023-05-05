@@ -91,7 +91,13 @@ module ryu_sprite (
 				blue = jump_blue;
 				ryu_on = jump_on;
 			end
-			default: ;
+			default: 
+			begin
+				red = stand_red;
+				green = stand_green;
+				blue = stand_blue;
+				ryu_on = stand_on;
+			end
 		endcase
 	end
 

@@ -2,7 +2,7 @@ module  ryu ( input Reset, frame_clk,
 					input [7:0] keycode_0, keycode_1, keycode_2, keycode_3,
 					input int XDist, Ryu_Knockback,
                output logic [9:0]  RyuX, RyuY,
-					output logic RyuJump);
+					output logic RyuJump, RyuCrouch, RyuLeft, RyuRight);
 					
 	 int Ryu_X_Pos, Ryu_Y_Pos;
 	 int Ryu_X_Motion, Ryu_Y_Motion;
@@ -32,20 +32,26 @@ module  ryu ( input Reset, frame_clk,
 				begin
 				Ryu_X_Motion <= 0;
 				JumpP1 <= 0;
+				RyuLeft = 1'b0;
+				RyuRight = 1'b0;
+				RyuCrouch = 1'b0;
 				if ((keycode_0 == 8'h04 || keycode_1 == 8'h04 || keycode_2 == 8'h04 || keycode_3 == 8'h04) && (Ryu_X_Pos > Bound_X_Min))
 					begin
 						Ryu_X_Motion <= -2;//A
 						JumpP1 <= 0;
+						RyuLeft = 1'b1;
 					end
 				if ((keycode_0 == 8'h07 || keycode_1 == 8'h07 || keycode_2 == 8'h07 || keycode_3 == 8'h07) && (XDist > 105))
 					begin
 						Ryu_X_Motion <= 2;//D
 						JumpP1 <= 0;
+						RyuRight = 1'b1;
 					end
 				if (keycode_0 == 8'h16 || keycode_1 == 8'h16 || keycode_2 == 8'h16 || keycode_3 == 8'h16)
 					begin
 						JumpP1 <= 0; //S
 						Ryu_X_Motion <= 0;
+						RyuCrouch = 1'b1;
 					end
 				if (keycode_0 == 8'h1A || keycode_1 == 8'h1A || keycode_2 == 8'h1A || keycode_3 == 8'h1A)
 					begin

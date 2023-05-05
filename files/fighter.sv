@@ -72,7 +72,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [7:0] keycode_0, keycode_1, keycode_2, keycode_3;
 	logic [7:0] akuma_hbar, ryu_hbar;
 	logic [3:0] RyuIndex, AkumaIndex;
-	logic Akumahit, Ryuhit, Akumapunch, Ryupunch, RyuJump, AkumaJump;
+	logic Akumahit, Ryuhit, Akumapunch, Ryupunch, RyuJump, AkumaJump, RyuCrouch, AkumaCrouch;
+	logic RyuLeft, RyuRight, AkumaLeft, AkumaRight;
 	int AkumaKB, RyuKB;
 	int XDist;
 
@@ -205,7 +206,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.Ryu_Knockback(RyuKB),
 		.RyuX(onexsig),
 		.RyuY(oneysig),
-		.RyuJump(RyuJump)
+		.RyuJump(RyuJump),
+		.RyuCrouch(RyuCrouch),
+		.RyuLeft(RyuLeft),
+		.RyuRight(RyuRight)
 	);
 	
 	akuma akuma_movement(
@@ -219,7 +223,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.Akuma_Knockback(AkumaKB),
 		.AkumaX(twoxsig),
 		.AkumaY(twoysig),
-		.AkumaJump(AkumaJump)
+		.AkumaJump(AkumaJump),
+		.AkumaCrouch(AkumaCrouch),
+		.AkumaLeft(AkumaLeft),
+		.AkumaRight(AkumaRight)
 	);
 	
 	punch punch_control(
@@ -263,12 +270,20 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	spriteMux ryuMux(
 		.punch(Ryupunch),
 		.jump(RyuJump),
+		.crouch(RyuCrouch),
+		.left(RyuLeft),
+		.right(RyuRight),
+		.death(1'b0),
 		.spriteIndex(RyuIndex)
 	);
 		
 	spriteMux akumaMux(
 		.punch(Akumapunch),
 		.jump(AkumaJump),
+		.crouch(RyuCrouch),
+		.left(RyuLeft),
+		.right(RyuRight),
+		.death(1'b0),
 		.spriteIndex(AkumaIndex)
 	);	
 
